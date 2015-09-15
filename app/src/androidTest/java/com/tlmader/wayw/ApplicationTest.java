@@ -1,4 +1,4 @@
-package css.tlmader.wayw;
+package com.tlmader.wayw;
 
 import android.app.Application;
 import android.test.ApplicationTestCase;

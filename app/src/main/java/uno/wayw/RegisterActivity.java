@@ -10,13 +10,17 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class RegisterActivity extends AppCompatActivity {
 
     public Button saveRegistrationButton;
-    public EditText name; //Might want two fields for first and last name?
-    public EditText userName;
-    public EditText password;
+    public EditText regName; //Might want two fields for first and last name?
+    public EditText regUserName;
+    public EditText regPassword;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,25 +43,38 @@ public class RegisterActivity extends AppCompatActivity {
 
     public void registerInformation(){
         saveRegistrationButton = (Button) findViewById(R.id.finishedRegistrationButton);
-        name = (EditText) findViewById(R.id.registerName);
-        userName = (EditText) findViewById(R.id.registerUserName);
-        password = (EditText) findViewById(R.id.registerPassword);
+        regName = (EditText) findViewById(R.id.registerName);
+        regUserName = (EditText) findViewById(R.id.registerUserName);
+        regPassword = (EditText) findViewById(R.id.registerPassword);
 
         saveRegistrationButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Log.d("clicked", "completed registration");
-                //TODO: Save name, userName, and password to the database
-                Log.d("EditText", name.getText().toString());
-                Log.d("EditText", userName.getText().toString());
-                Log.d("EditText", password.getText().toString());
-                //Creates a new User
-                User newUser = new User();
-                newUser.setName(name.getText().toString());
-                newUser.setUserName(userName.getText().toString());
-                newUser.setPassword(password.getText().toString());
-                //Navigate to Login Page
-                startActivity(new Intent(RegisterActivity.this, MainActivity.class));
+                Log.d("EditText", regName.getText().toString());
+                Log.d("EditText", regUserName.getText().toString());
+                Log.d("EditText", regPassword.getText().toString());
+
+                List<User> test = User.getByUserName(regUserName.getText().toString());
+
+                //Check to make sure User Name is not already in use
+                if(test.size() == 0) {
+                    //Creates a new User
+                    User newUser = new User();
+
+                    newUser.name = regName.getText().toString();
+                    newUser.userName = regUserName.getText().toString();
+                    newUser.password = regPassword.getText().toString();
+                    newUser.friends = new ArrayList<String>();
+                    newUser.save();
+
+                    //Navigate to Login Page
+                    startActivity(new Intent(RegisterActivity.this, MainActivity.class));
+                }
+                else{
+                    Toast.makeText(getApplicationContext(), "Sorry user name is already used. Please try again.",
+                            Toast.LENGTH_LONG).show();
+                }
             }
         });
     }

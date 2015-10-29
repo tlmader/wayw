@@ -4,5 +4,6 @@
     <string name="welcomeText">Welcome to wawy</string>
     <string name="loginButton">Login</string>
     <string name="registerButton">Register</string>
-    <string name="title_activity_register">RegisterActivity</string>>
+    <string name="title_activity_register">RegisterActivity</string>
+    <string name="title_activity_feed">FeedActivity</string>>
 </resources>

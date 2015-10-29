@@ -27,7 +27,7 @@
         android:text="@string/loginButton"
         android:id="@+id/loginButton"
         android:layout_marginTop="55dp"
-        android:layout_below="@+id/editText2"
+        android:layout_below="@+id/loginPassword"
         android:layout_alignStart="@+id/registerButton" />
 
     <Button
@@ -45,7 +45,7 @@
         android:text="Name"
         android:background="@android:color/white"
         android:ems="10"
-        android:id="@+id/editText"
+        android:id="@+id/loginName"
         android:layout_below="@+id/welcomeText"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="43dp" />
@@ -56,9 +56,9 @@
         android:inputType="textPassword"
         android:background="@android:color/white"
         android:ems="10"
-        android:id="@+id/editText2"
+        android:id="@+id/loginPassword"
         android:layout_centerVertical="true"
-        android:layout_alignStart="@+id/editText"
+        android:layout_alignStart="@+id/loginName"
         android:text="Password" />
 
 </RelativeLayout>

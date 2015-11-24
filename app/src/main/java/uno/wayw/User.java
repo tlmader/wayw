@@ -15,13 +15,21 @@ import java.util.List;
 @Table(name = "User")
 public class User extends Model{
 
+    //@Column(name = "Id")
+    //public long id;
+
     @Column(name = "Name")
     public String name;
+
     @Column(name = "UserName")
     public String userName;
+
     @Column(name = "Password")
     public String password;
-    public ArrayList<String> friends;
+
+    @Column(name = "Friends")
+    public ArrayList<User> friends;
+
     //TODO:Add Genre to Users
     //public Genre genre;
 
@@ -53,11 +61,11 @@ public class User extends Model{
         this.password = password;
     }
 
-    public ArrayList getFriends() {
+    public ArrayList<User> getFriends() {
         return friends;
     }
 
-    public void setFriends(ArrayList friends) {
+    public void setFriends(ArrayList<User> friends) {
         this.friends = friends;
     }
 

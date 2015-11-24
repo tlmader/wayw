@@ -22,6 +22,11 @@ public class MainActivity extends AppCompatActivity {
     public Button loginButton;
     public EditText loginName;
     public EditText loginPassword;
+    //The current logged in User
+    //public User currentUser;
+
+    //Global Variable logged in user
+    final GlobalClass currentUser = (GlobalClass) getApplicationContext();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -103,6 +108,8 @@ public class MainActivity extends AppCompatActivity {
                       if( (test.size() != 0 ) && (test.get(0).userName.equals(loginName.getText().toString()))
                               && (test.get(0).password.equals(loginPassword.getText().toString()))  ){
                           //If the User is in the database then Navigate to FeedActivity
+                          currentUser.setCurrentUser(test.get(0));
+
                           startActivity(new Intent(MainActivity.this, FeedActivity.class));
                       }
                       else{

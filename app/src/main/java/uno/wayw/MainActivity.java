@@ -1,7 +1,9 @@
 package uno.wayw;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
@@ -22,11 +24,11 @@ public class MainActivity extends AppCompatActivity {
     public Button loginButton;
     public EditText loginName;
     public EditText loginPassword;
-    //The current logged in User
-    //public User currentUser;
 
     //Global Variable logged in user
-    final GlobalClass currentUser = (GlobalClass) getApplicationContext();
+    //public GlobalClass currentUser;
+
+    public SharedPreferences preferences;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,6 +36,8 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+        //currentUser = (GlobalClass) getApplicationContext();
+        preferences = PreferenceManager.getDefaultSharedPreferences(this);
 
         //Call register method
         register();
@@ -108,7 +112,13 @@ public class MainActivity extends AppCompatActivity {
                       if( (test.size() != 0 ) && (test.get(0).userName.equals(loginName.getText().toString()))
                               && (test.get(0).password.equals(loginPassword.getText().toString()))  ){
                           //If the User is in the database then Navigate to FeedActivity
-                          currentUser.setCurrentUser(test.get(0));
+
+                          //currentUser.setCurrentUser(test.get(0));
+                          //Log.d("GlobalSet", currentUser.getCurrentUser().name);
+
+                          SharedPreferences.Editor editor = preferences.edit();
+                          editor.putString("loggedInName", test.get(0).userName);
+                          editor.apply();
 
                           startActivity(new Intent(MainActivity.this, FeedActivity.class));
                       }

@@ -1,7 +1,9 @@
 package uno.wayw;
 
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -11,6 +13,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * A placeholder fragment containing a simple view.
@@ -23,6 +26,8 @@ public class FeedActivityFragment extends Fragment {
     private FeedActivityFragmentItemCLickListener itemCLickListener;
     private RecyclerView recyclerView;
     public User currentUser;
+
+    public SharedPreferences preferences;
 
     public FeedActivityFragment() {
     }
@@ -52,15 +57,32 @@ public class FeedActivityFragment extends Fragment {
 
         friends = new ArrayList<>();
         FeedActivity feedActivity = (FeedActivity) getActivity();
-        //Get the global variable "currentUser" from FeedActivity
-        currentUser = feedActivity.getLoggedInUser();
-        initFriends(currentUser);
 
+        preferences = PreferenceManager.getDefaultSharedPreferences(this.getContext());
+
+        //Get the global variable "currentUser" from FeedActivity
+        //currentUser = feedActivity.getLoggedInUser();
+        //initFriends(currentUser);
+
+        String userName = preferences.getString("loggedInName", "");
+        List<User> name = User.getByUserName(userName);
+        initFriends(name.get(0));
         return view;
     }
 
     public void initFriends(User loggedInUser) {
+
+        //For testing purposes to manually add Friends
+        List<User> tedList = User.getByUserName("teddy");
+        List<User> erikaList = User.getByUserName("E");
+        ArrayList<User> newFriends = new ArrayList<>();
+        newFriends.add(tedList.get(0));
+        newFriends.add(erikaList.get(0));
+        loggedInUser.setFriends(newFriends);
+        loggedInUser.save();
+
         friends = loggedInUser.getFriends();
+        //friends = (ArrayList) loggedInUser.getAllFriends();
     }
 
     // Create the basic adapter extending from RecyclerView.Adapter

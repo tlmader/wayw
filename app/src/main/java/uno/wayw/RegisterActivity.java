@@ -66,6 +66,15 @@ public class RegisterActivity extends AppCompatActivity {
                     newUser.userName = regUserName.getText().toString();
                     newUser.password = regPassword.getText().toString();
                     newUser.friends = new ArrayList<User>();
+                    newUser.genre = "Casual";
+                    /**
+                    List<User> tedList = User.getByUserName("teddy");
+                    List<User> erikaList = User.getByUserName("E");
+                    ArrayList<User> newFriends = new ArrayList<>();
+                    newFriends.add(tedList.get(0));
+                    newFriends.add(erikaList.get(0));
+                    newUser.setFriends(newFriends);
+**/
                     newUser.save();
 
                     //Navigate to Login Page

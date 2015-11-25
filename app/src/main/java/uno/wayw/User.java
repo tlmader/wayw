@@ -1,5 +1,8 @@
 package uno.wayw;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import com.activeandroid.Model;
 import com.activeandroid.annotation.Column;
 import com.activeandroid.annotation.Table;
@@ -13,7 +16,7 @@ import java.util.List;
  */
 
 @Table(name = "User")
-public class User extends Model{
+public class User extends Model implements Parcelable{
 
     //@Column(name = "Id")
     //public long id;
@@ -29,6 +32,9 @@ public class User extends Model{
 
     @Column(name = "Friends")
     public ArrayList<User> friends;
+
+    @Column(name = "Genre")
+    public String genre;
 
     //TODO:Add Genre to Users
     //public Genre genre;
@@ -69,6 +75,37 @@ public class User extends Model{
         this.friends = friends;
     }
 
+    public String getGenre() {
+        return genre;
+    }
+
+    public void setGenre(String genre) {
+        this.genre = genre;
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+            dest.writeString(userName);
+    }
+
+    public static final Parcelable.Creator<User> CREATOR
+            = new Parcelable.Creator<User>() {
+        public User createFromParcel(Parcel in) {
+            User mUser = new User();
+            mUser.userName = in.readString();
+            return mUser;
+        }
+
+        public User[] newArray(int size) {
+            return new User[size];
+        }
+    };
+
     public static List<User> getAll() {
         return new Select()
                 .from(User.class)
@@ -78,7 +115,13 @@ public class User extends Model{
     public static List<User> getByUserName(String searchUserName){
         return new Select()
                 .from(User.class)
-                .where("UserName = ?", searchUserName )
+                .where("UserName = ?", searchUserName)
+                .execute();
+    }
+
+    public static List<User> getAllFriends() {
+        return new Select("Friends")
+                .from(User.class)
                 .execute();
     }
 

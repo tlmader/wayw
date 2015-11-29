@@ -10,6 +10,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import java.util.ArrayList;
@@ -56,7 +57,7 @@ public class FeedActivityFragment extends Fragment {
         recyclerView.setLayoutManager(new LinearLayoutManager(this.getContext()));
 
         friends = new ArrayList<>();
-        FeedActivity feedActivity = (FeedActivity) getActivity();
+        //FeedActivity feedActivity = (FeedActivity) getActivity();
 
         preferences = PreferenceManager.getDefaultSharedPreferences(this.getContext());
 
@@ -64,6 +65,7 @@ public class FeedActivityFragment extends Fragment {
         //currentUser = feedActivity.getLoggedInUser();
         //initFriends(currentUser);
 
+        //Get the logged user by using SharedPreferences
         String userName = preferences.getString("loggedInName", "");
         List<User> name = User.getByUserName(userName);
         initFriends(name.get(0));
@@ -71,14 +73,24 @@ public class FeedActivityFragment extends Fragment {
     }
 
     public void initFriends(User loggedInUser) {
-
+        //TODO: Make a "Connection" table and loop through to find finds then populate "friends" array with those users
         //For testing purposes to manually add Friends
         List<User> tedList = User.getByUserName("teddy");
         List<User> erikaList = User.getByUserName("E");
+        List<User> toriList = User.getByUserName("tori");
+        //Log.d("Name", tedList.get(0).name);
+        //Log.d("Username" , tedList.get(0).userName);
+        //Log.d("Password" , tedList.get(0).password);
+        //Log.d("Genre" , tedList.get(0).genre);
+
+
         ArrayList<User> newFriends = new ArrayList<>();
         newFriends.add(tedList.get(0));
         newFriends.add(erikaList.get(0));
+        newFriends.add(toriList.get(0));
         loggedInUser.setFriends(newFriends);
+        //TODO: Fix this because it was erasing the Casual column for the loggedIn User, but shouldn't have to worry about it once add the "Connection" table
+        loggedInUser.setGenre("Casual");
         loggedInUser.save();
 
         friends = loggedInUser.getFriends();
@@ -118,7 +130,13 @@ public class FeedActivityFragment extends Fragment {
         @Override
         public void onBindViewHolder(ViewHolder viewHolder, int position) {
             User friend = friends.get(position);
-            viewHolder.textView.setText(friend.getUserName() );
+            //Adds the friend's name to the viewHolder
+            viewHolder.textView.setText(friend.userName );
+            //Adds the friend's pic to the viewHolder
+            //TODO:Add a column to the User table to store the pic url
+            viewHolder.imageViewPic.setImageResource(R.drawable.placeholder);
+            //TODO:Add a column to the User table to store the icon pic url
+            viewHolder.imageViewIcon.setImageResource(R.drawable.person_placeholder_icon);
         }
 
         // Return the total count of items
@@ -134,6 +152,8 @@ public class FeedActivityFragment extends Fragment {
         // Your holder should contain a member variable
         // for any view that will be set as you render a row
         public TextView textView;
+        public ImageView imageViewPic;
+        public ImageView imageViewIcon;
 
         // We also create a constructor that accepts the entire item row
         // and does the view lookups to find each subview
@@ -143,6 +163,8 @@ public class FeedActivityFragment extends Fragment {
             super(itemView);
 
             textView = (TextView) itemView.findViewById(R.id.friendName);
+            imageViewPic = (ImageView) itemView.findViewById(R.id.friendImage);
+            imageViewIcon = (ImageView) itemView.findViewById(R.id.friendIcon);
         }
     }
 
@@ -151,18 +173,3 @@ public class FeedActivityFragment extends Fragment {
     }
 
 }
-
-/**
-public FeedActivityFragment() {
-}
-
-public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                         Bundle savedInstanceState) {
-    View view = inflater.inflate(R.layout.fragment_feed, container, false);
-
-
-
-    return view;
-}
-}
- **/

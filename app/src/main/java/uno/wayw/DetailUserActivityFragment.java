@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 /**
@@ -16,8 +17,9 @@ public class DetailUserActivityFragment extends Fragment {
     private static final String FRIEND_PARAM = "parm1";
 
     private User friend;
-    //private FrameLayout containerLayout;
-    private TextView containerLayout;
+    private TextView userName;
+    private TextView genre;
+    private ImageView pic;
 
     /**
      * Use this factory method to create a new instance of
@@ -49,11 +51,15 @@ public class DetailUserActivityFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_detail_user, container, false);
-        //containerLayout = (FrameLayout) view.findViewById(R.id.container);
-        containerLayout = (TextView) view.findViewById(R.id.friendInfo);
+        userName = (TextView) view.findViewById(R.id.friendDetailUsername);
+        genre = (TextView) view.findViewById(R.id.friendGenre);
+        pic = (ImageView) view.findViewById(R.id.friendDetailImage);
 
         if (friend != null) {
-            containerLayout.setText("User Name: " + friend.userName);
+            userName.setText("Username: " + friend.userName);
+            genre.setText("Genre: " + friend.genre);
+            //TODO:Add pictures column to user and iterate through array to display all of the user's pictures
+            pic.setImageResource(R.drawable.placeholder);
         }
 
         return view;

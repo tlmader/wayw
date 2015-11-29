@@ -36,9 +36,6 @@ public class User extends Model implements Parcelable{
     @Column(name = "Genre")
     public String genre;
 
-    //TODO:Add Genre to Users
-    //public Genre genre;
-
     public User(){
 
     }
@@ -91,6 +88,8 @@ public class User extends Model implements Parcelable{
     @Override
     public void writeToParcel(Parcel dest, int flags) {
             dest.writeString(userName);
+            dest.writeString(genre);
+            dest.writeString(name);
     }
 
     public static final Parcelable.Creator<User> CREATOR
@@ -98,6 +97,8 @@ public class User extends Model implements Parcelable{
         public User createFromParcel(Parcel in) {
             User mUser = new User();
             mUser.userName = in.readString();
+            mUser.genre = in.readString();
+            mUser.name = in.readString();
             return mUser;
         }
 
@@ -105,6 +106,7 @@ public class User extends Model implements Parcelable{
             return new User[size];
         }
     };
+
 
     public static List<User> getAll() {
         return new Select()
@@ -120,8 +122,15 @@ public class User extends Model implements Parcelable{
     }
 
     public static List<User> getAllFriends() {
-        return new Select("Friends")
+        return new Select("Id,Friends")
                 .from(User.class)
+                .execute();
+    }
+
+    public static List<User> getGenreByUserName(String searchUserName){
+        return new Select(new String[]{"Id,Genre"})
+                .from(User.class)
+                .where("UserName = ?", searchUserName)
                 .execute();
     }
 

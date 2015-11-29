@@ -46,10 +46,12 @@ public class RegisterActivity extends AppCompatActivity {
         regName = (EditText) findViewById(R.id.registerName);
         regUserName = (EditText) findViewById(R.id.registerUserName);
         regPassword = (EditText) findViewById(R.id.registerPassword);
+        //TODO: Add a Genre field
 
         saveRegistrationButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
                 Log.d("clicked", "completed registration");
                 Log.d("EditText", regName.getText().toString());
                 Log.d("EditText", regUserName.getText().toString());
@@ -75,7 +77,11 @@ public class RegisterActivity extends AppCompatActivity {
                     newFriends.add(erikaList.get(0));
                     newUser.setFriends(newFriends);
 **/
+                    Log.d("Genre", newUser.genre);
                     newUser.save();
+                    Log.d("Test", newUser.genre);
+                    List<User> testList = User.getByUserName(newUser.userName);
+                    Log.d("Test",  testList.get(0).genre);
 
                     //Navigate to Login Page
                     startActivity(new Intent(RegisterActivity.this, MainActivity.class));

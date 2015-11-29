@@ -116,6 +116,7 @@ public class MainActivity extends AppCompatActivity {
                           //currentUser.setCurrentUser(test.get(0));
                           //Log.d("GlobalSet", currentUser.getCurrentUser().name);
 
+                          //Saving the loggedIn User into SharedPreferences
                           SharedPreferences.Editor editor = preferences.edit();
                           editor.putString("loggedInName", test.get(0).userName);
                           editor.apply();

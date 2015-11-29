@@ -1,4 +1,4 @@
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -16,15 +16,35 @@
     android:text="Friend Details"
     android:textStyle="bold"
     android:textAlignment="center"
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    android:layout_gravity="center_horizontal|top" />
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"/>
 
     <TextView
-        android:id="@+id/friendInfo"
+        android:id="@+id/friendDetailUsername"
         android:textSize="20dp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_gravity="center" />
+        android:layout_gravity="center"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="56dp" />
 
-</LinearLayout>
+    <TextView
+        android:id= "@+id/friendGenre"
+        android:textSize="20dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_below="@+id/friendDetailUsername"
+        android:layout_alignStart="@+id/friendDetailUsername"
+        android:layout_marginTop="32dp" />
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/friendDetailImage"
+        android:layout_below="@+id/friendGenre"
+        android:layout_alignStart="@+id/friendGenre"
+        android:layout_marginTop="32dp"/>
+
+</RelativeLayout>

@@ -1,20 +1,48 @@
 package uno.wayw.data;
 
+import com.activeandroid.Model;
+import com.activeandroid.annotation.Column;
+import com.activeandroid.annotation.Table;
+
 /**
  * Created by Breezy on 11/29/15.
  */
-public class FeedItem {
-    private int id;
-    private String name, status, image, profilePic, timeStamp, url;
+
+@Table(name = "FeedItem")
+public class FeedItem extends Model{
+
+    //@Column(name = "Id")
+    //public int id;
+
+    @Column(name = "UserName")
+    public String userName;
+
+    @Column(name = "Status")
+    public String status;
+
+    @Column(name = "Image")
+    public String image;
+
+    @Column(name = "ProfilePic")
+    public String profilePic;
+
+    @Column(name = "TimeStamp")
+    public String timeStamp;
+
+    @Column(name = "Url")
+    public String url;
+
+    @Column(name = "Genre")
+    public String genre;
 
     public FeedItem() {
     }
 
-    public FeedItem(int id, String name, String image, String status,
+    public FeedItem(String name, String image, String status,
                     String profilePic, String timeStamp, String url) {
         super();
-        this.id = id;
-        this.name = name;
+        //this.id = id;
+        this.userName = name;
         this.image = image;
         this.status = status;
         this.profilePic = profilePic;
@@ -22,20 +50,33 @@ public class FeedItem {
         this.url = url;
     }
 
-    public int getId() {
-        return id;
+    public FeedItem(String name, String image, String status,
+                    String profilePic, String timeStamp, String url, String genre) {
+        super();
+        //this.id = id;
+        this.userName = name;
+        this.image = image;
+        this.status = status;
+        this.profilePic = profilePic;
+        this.timeStamp = timeStamp;
+        this.url = url;
+        this.genre = genre;
     }
 
-    public void setId(int id) {
-        this.id = id;
-    }
+    //public int getId() {
+    //    return id;
+    //}
+
+    //public void setId(int id) {
+      //  this.id = id;
+    //}
 
     public String getName() {
-        return name;
+        return userName;
     }
 
     public void setName(String name) {
-        this.name = name;
+        this.userName = name;
     }
 
     public String getImge() {
@@ -76,5 +117,13 @@ public class FeedItem {
 
     public void setUrl(String url) {
         this.url = url;
+    }
+
+    public String getGenre() {
+        return genre;
+    }
+
+    public void setGenre(String genre) {
+        this.genre = genre;
     }
 }

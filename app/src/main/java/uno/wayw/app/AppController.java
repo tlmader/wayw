@@ -13,7 +13,7 @@ import com.android.volley.toolbox.Volley;
 
 import uno.wayw.volley.LruBitmapCache;
 
-public class AppController extends Application {
+public class AppController extends com.activeandroid.app.Application {
 
     public static final String TAG = AppController.class.getSimpleName();
 

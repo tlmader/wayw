@@ -3,7 +3,6 @@ package uno.wayw.main;
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.os.Bundle;
-import android.view.Menu;
 import android.widget.ListView;
 
 import com.android.volley.Cache;
@@ -27,8 +26,8 @@ import uno.wayw.adapter.FeedListAdapter;
 import uno.wayw.app.AppController;
 import uno.wayw.data.FeedItem;
 
-public class MainActivity extends Activity {
-    private static final String TAG = MainActivity.class.getSimpleName();
+public class FeedActivity extends Activity {
+    private static final String TAG = FeedActivity.class.getSimpleName();
     private ListView listView;
     private FeedListAdapter listAdapter;
     private List<FeedItem> feedItems;
@@ -38,7 +37,7 @@ public class MainActivity extends Activity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_feed);
 
         listView = (ListView) findViewById(R.id.list);
 
@@ -106,7 +105,7 @@ public class MainActivity extends Activity {
                 JSONObject feedObj = (JSONObject) feedArray.get(i);
 
                 FeedItem item = new FeedItem();
-                item.setId(feedObj.getInt("id"));
+                //item.setId(feedObj.getInt("id"));
                 item.setName(feedObj.getString("name"));
 
                 // Image might be null sometimes
@@ -130,12 +129,6 @@ public class MainActivity extends Activity {
         } catch (JSONException e) {
             e.printStackTrace();
         }
-    }
-
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.menu_main, menu);
-        return true;
     }
 
 }

@@ -2,12 +2,13 @@ package uno.wayw.main;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.widget.ListView;
 
 import com.android.volley.Cache;
-import com.android.volley.Cache.Entry;
-import com.android.volley.Request.Method;
+import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.VolleyLog;
@@ -22,6 +23,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import uno.wayw.R;
+import uno.wayw.User;
 import uno.wayw.adapter.FeedListAdapter;
 import uno.wayw.app.AppController;
 import uno.wayw.data.FeedItem;
@@ -32,6 +34,10 @@ public class FeedActivity extends Activity {
     private FeedListAdapter listAdapter;
     private List<FeedItem> feedItems;
     private String URL_FEED = "http://api.androidhive.info/feed/feed.json";
+
+    public SharedPreferences preferences;
+    public User loggedInUser;
+
 
     @SuppressLint("NewApi")
     @Override
@@ -52,9 +58,36 @@ public class FeedActivity extends Activity {
         //getActionBar().setIcon(
           //      new ColorDrawable(getResources().getColor(android.R.color.transparent)));
 
+        //Gets the current loggedIn User
+        preferences = PreferenceManager.getDefaultSharedPreferences(this);
+        //Get the logged user by using SharedPreferences
+        String userName = preferences.getString("loggedInName", "");
+        List<User> name = User.getByUserName(userName);
+        loggedInUser = name.get(0);
+
+        //TODO: Need to get the string to pull from the phone Photos
+        //TESTING PURPOSES -- Mocking adding a FeedItem to the DB
+        /**
+        FeedItem test1FeedItem = new FeedItem("Ted", "http://api.androidhive.info/feed/img/cosmos.jpg", "Please let this work",
+                "http://api.androidhive.info/feed/img/nat.jpg", "1403375851930", "http://www.google.com");
+        FeedItem test2FeedItem = new FeedItem("Erika", "http://api.androidhive.info/feed/img/nav_drawer.jpg", "Please let this work",
+                "http://api.androidhive.info/feed/img/nat.jpg", "1403375851930", "http://www.google.com");
+        FeedItem test3FeedItem = new FeedItem("Ted", "http://api.androidhive.info/feed/img/discovery_mos.jpg", "Please let this work",
+                "http://api.androidhive.info/feed/img/nat.jpg", "1403375851930", "http://www.google.com");
+        test1FeedItem.save();
+        test2FeedItem.save();
+        test3FeedItem.save();
+        **/
+
+        //Pull from the Database
+        //List<FeedItem> testData = new ArrayList<>();
+        //testData = FeedItem.getAll();
+        //feedItems = testData;
+
+
         // We first check for cached request
         Cache cache = AppController.getInstance().getRequestQueue().getCache();
-        Entry entry = cache.get(URL_FEED);
+        Cache.Entry entry = cache.get(URL_FEED);
         if (entry != null) {
             // fetch the data from cache
             try {
@@ -70,7 +103,7 @@ public class FeedActivity extends Activity {
 
         } else {
             // making fresh volley request and getting json
-            JsonObjectRequest jsonReq = new JsonObjectRequest(Method.GET,
+            JsonObjectRequest jsonReq = new JsonObjectRequest(Request.Method.GET,
                     URL_FEED, (String)null, new Response.Listener<JSONObject>() {
 
                 @Override
@@ -97,6 +130,7 @@ public class FeedActivity extends Activity {
     /**
      * Parsing json reponse and passing the data to feed view list adapter
      * */
+
     private void parseJsonFeed(JSONObject response) {
         try {
             JSONArray feedArray = response.getJSONArray("feed");
@@ -130,5 +164,8 @@ public class FeedActivity extends Activity {
             e.printStackTrace();
         }
     }
+
+
+
 
 }

@@ -3,6 +3,9 @@ package uno.wayw.data;
 import com.activeandroid.Model;
 import com.activeandroid.annotation.Column;
 import com.activeandroid.annotation.Table;
+import com.activeandroid.query.Select;
+
+import java.util.List;
 
 /**
  * Created by Breezy on 11/29/15.
@@ -125,5 +128,11 @@ public class FeedItem extends Model{
 
     public void setGenre(String genre) {
         this.genre = genre;
+    }
+
+    public static List<FeedItem> getAll() {
+        return new Select()
+                .from(FeedItem.class)
+                .execute();
     }
 }

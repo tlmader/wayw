@@ -1,6 +1,6 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools" tools:context="uno.wayw.MainActivity">
+    xmlns:tools="http://schemas.android.com/tools" tools:context="uno.wayw.FeedActivity">
 
     <item android:id="@+id/action_add" android:title="@string/action_upload"
         android:orderInCategory="100" app:showAsAction="never" />

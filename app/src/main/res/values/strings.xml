@@ -3,12 +3,12 @@
     <string name="action_search">Search</string>
     <string name="action_upload">Upload</string>
     <string name="action_settings">Settings</string>
-    <string name="title_activity_main">MainActivity</string>
     <string name="welcomeText">Welcome to wayw.</string>
     <string name="loginButton">Login</string>
     <string name="registerButton">Register</string>
-    <string name="title_activity_register">RegisterActivity</string>
-    <string name="title_activity_feed">FeedActivity</string>
+    <string name="title_activity_main">MainActivity</string>
+    <string name="title_activity_register">Register</string>
+    <string name="title_activity_feed">Feed</string>
     <string name="title_activity_detail_user">DetailUserActivity</string>
     <string name="title_activity_settings">Settings</string>
 

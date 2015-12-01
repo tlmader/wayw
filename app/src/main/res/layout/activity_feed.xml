@@ -15,10 +15,6 @@
 
     </android.support.design.widget.AppBarLayout>
 
-    <ListView
-        android:id="@+id/list"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:divider="@null" />
+    <include layout="@layout/content_feed" />
 
 </android.support.design.widget.CoordinatorLayout>

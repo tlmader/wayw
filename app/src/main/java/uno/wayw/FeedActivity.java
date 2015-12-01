@@ -1,6 +1,7 @@
 package uno.wayw;
 
 import android.annotation.SuppressLint;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -106,6 +107,8 @@ public class FeedActivity extends AppCompatActivity {
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
+            // Navigate to SettingsActivity
+            startActivity(new Intent(FeedActivity.this, SettingsActivity.class));
             return true;
         }
 

@@ -53,36 +53,36 @@ public class MainActivity extends AppCompatActivity {
         loginButton.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v) {
-            Log.d("clicked","hit login");
-            Log.d("EditText", loginName.getText().toString());
-            Log.d("EditText", loginPassword.getText().toString());
+                Log.d("clicked","hit login");
+                Log.d("EditText", loginName.getText().toString());
+                Log.d("EditText", loginPassword.getText().toString());
 
-            // Get the User with that login name
-            List<User> test = User.getByUserName(loginName.getText().toString());
+                // Get the User with that login name
+                List<User> test = User.getByUserName(loginName.getText().toString());
 
-            for(User t : test){
-            Log.d("DataBase", t.userName);
-            Log.d("DataBase", t.password);
-            }
-            Log.d("DataBase Count", " " + test.size());
+                for(User t : test){
+                Log.d("DataBase", t.userName);
+                Log.d("DataBase", t.password);
+                }
+                Log.d("DataBase Count", " " + test.size());
 
-            //Check to make sure User is in the db and the userName/password are equal to user input
-            if ((test.size() != 0) && (test.get(0).userName.equals(loginName.getText().toString()))
-                   && (test.get(0).password.equals(loginPassword.getText().toString()))) {
+                //Check to make sure User is in the db and the userName/password are equal to user input
+                if ((test.size() != 0) && (test.get(0).userName.equals(loginName.getText().toString()))
+                       && (test.get(0).password.equals(loginPassword.getText().toString()))) {
 
-               //Saving the loggedIn User into SharedPreferences
-               SharedPreferences.Editor editor = preferences.edit();
-               editor.putString("loggedInName", test.get(0).userName);
-               editor.apply();
+                   //Saving the loggedIn User into SharedPreferences
+                   SharedPreferences.Editor editor = preferences.edit();
+                   editor.putString("loggedInName", test.get(0).userName);
+                   editor.apply();
 
-               //If the User is in the database then Navigate to FeedActivity
-               startActivity(new Intent(MainActivity.this, FeedActivity.class));
-            }
-            else {
-               Toast.makeText(getApplicationContext(),
-                       "The name or password is not found. Please try again.",
-                       Toast.LENGTH_LONG).show();
-            }
+                   //If the User is in the database then Navigate to FeedActivity
+                   startActivity(new Intent(MainActivity.this, FeedActivity.class));
+                }
+                else {
+                   Toast.makeText(getApplicationContext(),
+                           "The name or password is not found. Please try again.",
+                           Toast.LENGTH_LONG).show();
+                }
             }
         });
     }

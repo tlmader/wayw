@@ -25,57 +25,42 @@ public class RegisterActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register);
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
-
-        registerInformation();
+        createInterface();
     }
 
-    public void registerInformation(){
+    public void createInterface(){
         saveRegistrationButton = (Button) findViewById(R.id.finishedRegistrationButton);
         regName = (EditText) findViewById(R.id.registerName);
         regUserName = (EditText) findViewById(R.id.registerUserName);
         regPassword = (EditText) findViewById(R.id.registerPassword);
-        //TODO: Add a Genre field
 
         saveRegistrationButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+            Log.d("clicked", "completed registration");
+            Log.d("EditText", regName.getText().toString());
+            Log.d("EditText", regUserName.getText().toString());
+            Log.d("EditText", regPassword.getText().toString());
 
-                Log.d("clicked", "completed registration");
-                Log.d("EditText", regName.getText().toString());
-                Log.d("EditText", regUserName.getText().toString());
-                Log.d("EditText", regPassword.getText().toString());
+            List<User> test = User.getByUserName(regUserName.getText().toString());
 
-                List<User> test = User.getByUserName(regUserName.getText().toString());
+            // Check to make sure User Name is not already in use
+            if (test.size() == 0) {
+                // Creates a new User
+                User newUser = new User();
 
-                //Check to make sure User Name is not already in use
-                if (test.size() == 0) {
-                    //Creates a new User
-                    User newUser = new User();
+                newUser.name = regName.getText().toString();
+                newUser.userName = regUserName.getText().toString();
+                newUser.password = regPassword.getText().toString();
+                newUser.save();
 
-                    newUser.name = regName.getText().toString();
-                    newUser.userName = regUserName.getText().toString();
-                    newUser.password = regPassword.getText().toString();
-
-                    /**
-                     List<User> tedList = User.getByUserName("teddy");
-                     List<User> erikaList = User.getByUserName("E");
-                     ArrayList<User> newFriends = new ArrayList<>();
-                     newFriends.add(tedList.get(0));
-                     newFriends.add(erikaList.get(0));
-                     newUser.setFriends(newFriends);
-                     **/
-                    newUser.save();
-
-                    //Navigate to Login Page
-                    startActivity(new Intent(RegisterActivity.this, MainActivity.class));
-                } else {
-                    Toast.makeText(getApplicationContext(), "Sorry user name is already used. Please try again.",
-                            Toast.LENGTH_LONG).show();
-                }
+                // Navigate to Login Page
+                startActivity(new Intent(RegisterActivity.this, MainActivity.class));
+            } else {
+                Toast.makeText(getApplicationContext(), "Sorry, username is already in use. Please try again.",
+                        Toast.LENGTH_LONG).show();
+            }
             }
         });
     }
-
 }

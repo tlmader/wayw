@@ -12,6 +12,8 @@ import android.widget.Toast;
 
 import java.util.List;
 
+import uno.wayw.data.User;
+
 public class RegisterActivity extends AppCompatActivity {
 
     public Button saveRegistrationButton;

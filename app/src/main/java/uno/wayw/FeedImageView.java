@@ -1,4 +1,4 @@
-package uno.wayw.main;
+package uno.wayw;
 
 /**
  * Created by Breezy on 11/29/15.

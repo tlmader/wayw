@@ -1,8 +1,10 @@
-package uno.wayw.main;
+package uno.wayw;
 
 import android.annotation.SuppressLint;
-import android.app.Activity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
+import android.view.Menu;
 import android.widget.ListView;
 
 import com.android.volley.Cache;
@@ -21,12 +23,11 @@ import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.List;
 
-import uno.wayw.R;
 import uno.wayw.adapter.FeedListAdapter;
 import uno.wayw.app.AppController;
 import uno.wayw.data.FeedItem;
 
-public class FeedActivity extends Activity {
+public class FeedActivity extends AppCompatActivity {
     private static final String TAG = FeedActivity.class.getSimpleName();
     private ListView listView;
     private FeedListAdapter listAdapter;
@@ -38,6 +39,8 @@ public class FeedActivity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_feed);
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
 
         listView = (ListView) findViewById(R.id.list);
 
@@ -46,17 +49,10 @@ public class FeedActivity extends Activity {
         listAdapter = new FeedListAdapter(this, feedItems);
         listView.setAdapter(listAdapter);
 
-        // These two lines not needed,
-        // just to get the look of facebook (changing background color & hiding the icon)
-        //getActionBar().setBackgroundDrawable(new ColorDrawable(Color.parseColor("#3b5998")));
-        //getActionBar().setIcon(
-          //      new ColorDrawable(getResources().getColor(android.R.color.transparent)));
-
-        // We first check for cached request
         Cache cache = AppController.getInstance().getRequestQueue().getCache();
         Entry entry = cache.get(URL_FEED);
         if (entry != null) {
-            // fetch the data from cache
+            // Fetch the data from cache
             try {
                 String data = new String(entry.data, "UTF-8");
                 try {
@@ -69,7 +65,7 @@ public class FeedActivity extends Activity {
             }
 
         } else {
-            // making fresh volley request and getting json
+            // Making fresh volley request and getting json
             JsonObjectRequest jsonReq = new JsonObjectRequest(Method.GET,
                     URL_FEED, (String)null, new Response.Listener<JSONObject>() {
 
@@ -91,7 +87,13 @@ public class FeedActivity extends Activity {
             // Adding request to volley request queue
             AppController.getInstance().addToRequestQueue(jsonReq);
         }
+    }
 
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        // Inflate the menu; this adds items to the action bar if it is present.
+        getMenuInflater().inflate(R.menu.menu_main, menu);
+        return true;
     }
 
     /**

@@ -24,7 +24,7 @@ import java.util.List;
 import uno.wayw.R;
 import uno.wayw.app.AppController;
 import uno.wayw.data.FeedItem;
-import uno.wayw.main.FeedImageView;
+import uno.wayw.FeedImageView;
 
 public class FeedListAdapter extends BaseAdapter {
     private Activity activity;

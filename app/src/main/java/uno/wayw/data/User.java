@@ -1,4 +1,4 @@
-package uno.wayw;
+package uno.wayw.data;
 
 import com.activeandroid.Model;
 import com.activeandroid.annotation.Column;

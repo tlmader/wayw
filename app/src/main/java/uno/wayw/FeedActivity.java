@@ -1,48 +1,35 @@
 package uno.wayw;
 
 import android.annotation.SuppressLint;
-import android.content.Intent;
+import android.app.Activity;
+import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
-import android.view.Menu;
-import android.view.MenuItem;
+import android.preference.PreferenceManager;
 import android.widget.ListView;
 
-import com.android.volley.Cache;
-import com.android.volley.Cache.Entry;
-import com.android.volley.Request.Method;
-import com.android.volley.Response;
-import com.android.volley.VolleyError;
-import com.android.volley.VolleyLog;
-import com.android.volley.toolbox.JsonObjectRequest;
-
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
-
-import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.List;
 
 import uno.wayw.adapter.FeedListAdapter;
-import uno.wayw.app.AppController;
 import uno.wayw.data.FeedItem;
+import uno.wayw.data.User;
 
-public class FeedActivity extends AppCompatActivity {
+public class FeedActivity extends Activity {
     private static final String TAG = FeedActivity.class.getSimpleName();
     private ListView listView;
     private FeedListAdapter listAdapter;
     private List<FeedItem> feedItems;
     private String URL_FEED = "http://api.androidhive.info/feed/feed.json";
 
+    public SharedPreferences preferences;
+    public User loggedInUser;
+
+
     @SuppressLint("NewApi")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_feed);
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
 
         listView = (ListView) findViewById(R.id.list);
 
@@ -51,10 +38,47 @@ public class FeedActivity extends AppCompatActivity {
         listAdapter = new FeedListAdapter(this, feedItems);
         listView.setAdapter(listAdapter);
 
+        // These two lines not needed,
+        // just to get the look of facebook (changing background color & hiding the icon)
+        //getActionBar().setBackgroundDrawable(new ColorDrawable(Color.parseColor("#3b5998")));
+        //getActionBar().setIcon(
+        //      new ColorDrawable(getResources().getColor(android.R.color.transparent)));
+
+        //Gets the current loggedIn User
+        preferences = PreferenceManager.getDefaultSharedPreferences(this);
+        //Get the logged user by using SharedPreferences
+        String userName = preferences.getString("loggedInName", "");
+        List<User> name = User.getByUserName(userName);
+        loggedInUser = name.get(0);
+
+        //TODO: Need to get the string to pull from the phone Photos
+        //TESTING PURPOSES -- Mocking adding a FeedItem to the DB
+        /**
+         FeedItem test1FeedItem = new FeedItem("Ted", "http://api.androidhive.info/feed/img/cosmos.jpg", "Please let this work",
+         "http://api.androidhive.info/feed/img/nat.jpg", "1403375851930", "http://www.google.com");
+         FeedItem test2FeedItem = new FeedItem("Erika", "http://api.androidhive.info/feed/img/nav_drawer.jpg", "Please let this work",
+         "http://api.androidhive.info/feed/img/nat.jpg", "1403375851930", "http://www.google.com");
+         FeedItem test3FeedItem = new FeedItem("Ted", "http://api.androidhive.info/feed/img/discovery_mos.jpg", "Please let this work",
+         "http://api.androidhive.info/feed/img/nat.jpg", "1403375851930", "http://www.google.com");
+         test1FeedItem.save();
+         test2FeedItem.save();
+         test3FeedItem.save();
+         **/
+
+        //Pull from the Database
+        List<FeedItem> testData = new ArrayList<>();
+        testData = FeedItem.getAll();
+        for(FeedItem t : testData){
+            feedItems.add(t);
+        }
+        feedItems = testData;
+        listAdapter.notifyDataSetChanged();
+/**
+        // We first check for cached request
         Cache cache = AppController.getInstance().getRequestQueue().getCache();
-        Entry entry = cache.get(URL_FEED);
+        Cache.Entry entry = cache.get(URL_FEED);
         if (entry != null) {
-            // Fetch the data from cache
+            // fetch the data from cache
             try {
                 String data = new String(entry.data, "UTF-8");
                 try {
@@ -67,8 +91,8 @@ public class FeedActivity extends AppCompatActivity {
             }
 
         } else {
-            // Making fresh volley request and getting json
-            JsonObjectRequest jsonReq = new JsonObjectRequest(Method.GET,
+            // making fresh volley request and getting json
+            JsonObjectRequest jsonReq = new JsonObjectRequest(Request.Method.GET,
                     URL_FEED, (String)null, new Response.Listener<JSONObject>() {
 
                 @Override
@@ -76,6 +100,16 @@ public class FeedActivity extends AppCompatActivity {
                     VolleyLog.d(TAG, "Response: " + response.toString());
                     if (response != null) {
                         parseJsonFeed(response);
+
+                        //Pull from the Database
+                        //List<FeedItem> testData = new ArrayList<>();
+                        //testData = FeedItem.getAll();
+                        //for(FeedItem t : testData){
+                        //    feedItems.add(t);
+                        //}
+                        //feedItems = testData;
+                        //listAdapter.notifyDataSetChanged();
+
                     }
                 }
             }, new Response.ErrorListener() {
@@ -89,7 +123,6 @@ public class FeedActivity extends AppCompatActivity {
             // Adding request to volley request queue
             AppController.getInstance().addToRequestQueue(jsonReq);
         }
-    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -115,9 +148,14 @@ public class FeedActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
+
+    }
+**/
+
     /**
      * Parsing json reponse and passing the data to feed view list adapter
      * */
+/**
     private void parseJsonFeed(JSONObject response) {
         try {
             JSONArray feedArray = response.getJSONArray("feed");
@@ -143,6 +181,7 @@ public class FeedActivity extends AppCompatActivity {
                 item.setUrl(feedUrl);
 
                 feedItems.add(item);
+
             }
 
             // notify data changes to list adapater
@@ -152,4 +191,7 @@ public class FeedActivity extends AppCompatActivity {
         }
     }
 
+
+**/
+    }
 }

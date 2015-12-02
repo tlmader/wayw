@@ -1,7 +1,6 @@
 package uno.wayw;
 
 import android.annotation.SuppressLint;
-import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
@@ -135,8 +134,8 @@ public class FeedActivity extends AppCompatActivity {
         int id = item.getItemId();
 
         //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-        }
+        //if (id == R.id.action_settings) {
+        //}
         return super.onOptionsItemSelected(item);
     }
 

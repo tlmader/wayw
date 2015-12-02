@@ -11,23 +11,14 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.ListView;
 
-import com.android.volley.Cache;
-import com.android.volley.Request;
-import com.android.volley.Response;
-import com.android.volley.VolleyError;
-import com.android.volley.VolleyLog;
-import com.android.volley.toolbox.JsonObjectRequest;
-
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.List;
 
 import uno.wayw.adapter.FeedListAdapter;
-import uno.wayw.app.AppController;
 import uno.wayw.data.FeedItem;
 import uno.wayw.data.User;
 
@@ -55,12 +46,6 @@ public class FeedActivity extends AppCompatActivity {
         listAdapter = new FeedListAdapter(this, feedItems);
         listView.setAdapter(listAdapter);
 
-        // These two lines not needed,
-        // just to get the look of facebook (changing background color & hiding the icon)
-        //getActionBar().setBackgroundDrawable(new ColorDrawable(Color.parseColor("#3b5998")));
-        //getActionBar().setIcon(
-        //      new ColorDrawable(getResources().getColor(android.R.color.transparent)));
-
         //Gets the current loggedIn User
         preferences = PreferenceManager.getDefaultSharedPreferences(this);
         //Get the logged user by using SharedPreferences
@@ -69,6 +54,7 @@ public class FeedActivity extends AppCompatActivity {
         loggedInUser = name.get(0);
 
         //TODO: Need to get the string to pull from the phone Photos
+
         //TESTING PURPOSES -- Mocking adding a FeedItem to the DB
         /**
          FeedItem test1FeedItem = new FeedItem("Ted", "http://api.androidhive.info/feed/img/cosmos.jpg", "Please let this work",
@@ -90,6 +76,9 @@ public class FeedActivity extends AppCompatActivity {
         }
         feedItems = testData;
         listAdapter.notifyDataSetChanged();
+
+/**
+ * USED WITH JSON
 
         // We first check for cached request
         Cache cache = AppController.getInstance().getRequestQueue().getCache();
@@ -117,16 +106,6 @@ public class FeedActivity extends AppCompatActivity {
                     VolleyLog.d(TAG, "Response: " + response.toString());
                     if (response != null) {
                         parseJsonFeed(response);
-
-                        //Pull from the Database
-                        //List<FeedItem> testData = new ArrayList<>();
-                        //testData = FeedItem.getAll();
-                        //for(FeedItem t : testData){
-                        //    feedItems.add(t);
-                        //}
-                        //feedItems = testData;
-                        //listAdapter.notifyDataSetChanged();
-
                     }
                 }
             }, new Response.ErrorListener() {
@@ -140,7 +119,7 @@ public class FeedActivity extends AppCompatActivity {
             // Adding request to volley request queue
             AppController.getInstance().addToRequestQueue(jsonReq);
         }
-
+**/
     }
 
     @Override
@@ -206,8 +185,4 @@ public class FeedActivity extends AppCompatActivity {
             e.printStackTrace();
         }
     }
-
-
-
-
 }

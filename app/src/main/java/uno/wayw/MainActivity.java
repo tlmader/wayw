@@ -40,12 +40,12 @@ public class MainActivity extends AppCompatActivity {
         loginPassword = (EditText) findViewById(R.id.loginPassword);
 
         registerButton.setOnClickListener(new View.OnClickListener(){
-              @Override
-              public void onClick(View v) {
-            Log.d("clicked", "hit register");
-            // Navigate to RegisterActivity
-            startActivity(new Intent(MainActivity.this, RegisterActivity.class));
-        }
+            @Override
+            public void onClick(View v) {
+                Log.d("clicked", "hit register");
+                // Navigate to RegisterActivity
+                startActivity(new Intent(MainActivity.this, RegisterActivity.class));
+            }
         });
 
         loginButton.setOnClickListener(new View.OnClickListener(){

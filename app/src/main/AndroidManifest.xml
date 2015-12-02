@@ -34,15 +34,6 @@
             android:theme="@style/AppTheme.NoActionBar" >
         </activity>
 
-        <activity
-            android:name=".SettingsActivity"
-            android:label="@string/title_activity_settings"
-            android:parentActivityName=".FeedActivity" >
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value="FeedActivity" />
-        </activity>
-
         <meta-data
             android:name="AA_DB_NAME"
             android:value="wayw.db" />

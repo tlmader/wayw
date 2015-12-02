@@ -56,7 +56,6 @@ public class FeedActivity extends AppCompatActivity {
         //TODO: Need to get the string to pull from the phone Photos
 
         //TESTING PURPOSES -- Mocking adding a FeedItem to the DB
-        /**
          FeedItem test1FeedItem = new FeedItem("Ted", "http://api.androidhive.info/feed/img/cosmos.jpg", "Please let this work",
          "http://api.androidhive.info/feed/img/nat.jpg", "1403375851930", "http://www.google.com");
          FeedItem test2FeedItem = new FeedItem("Erika", "http://api.androidhive.info/feed/img/nav_drawer.jpg", "Please let this work",
@@ -66,7 +65,6 @@ public class FeedActivity extends AppCompatActivity {
          test1FeedItem.save();
          test2FeedItem.save();
          test3FeedItem.save();
-         **/
 
         //Pull from the Database
         List<FeedItem> testData = new ArrayList<>();
@@ -138,19 +136,13 @@ public class FeedActivity extends AppCompatActivity {
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
-            // Navigate to SettingsActivity
-            startActivity(new Intent(FeedActivity.this, SettingsActivity.class));
-            return true;
         }
-
         return super.onOptionsItemSelected(item);
     }
-
 
     /**
      * Parsing json reponse and passing the data to feed view list adapter
      * */
-
     private void parseJsonFeed(JSONObject response) {
         try {
             JSONArray feedArray = response.getJSONArray("feed");

@@ -10,7 +10,6 @@
     <string name="title_activity_register">Register</string>
     <string name="title_activity_feed">Feed</string>
     <string name="title_activity_detail_user">DetailUserActivity</string>
-    <string name="title_activity_settings">Settings</string>
 
     <!-- Strings related to Settings -->
 

@@ -67,12 +67,12 @@ public class FeedActivity extends AppCompatActivity {
          test3FeedItem.save();
 
         //Pull from the Database
-        List<FeedItem> testData = new ArrayList<>();
-        testData = FeedItem.getAll();
-        for (FeedItem t : testData) {
+        List<FeedItem> feedFromDB = new ArrayList<>();
+        feedFromDB = FeedItem.getAll();
+        for (FeedItem t : feedFromDB) {
             feedItems.add(t);
         }
-        feedItems = testData;
+        feedItems = feedFromDB;
         listAdapter.notifyDataSetChanged();
 
 /**

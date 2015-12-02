@@ -1,11 +1,13 @@
 package uno.wayw;
 
 import android.annotation.SuppressLint;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.ListView;
@@ -55,6 +57,7 @@ public class FeedActivity extends AppCompatActivity {
         //TODO: Need to get the string to pull from the phone Photos
 
         //TESTING PURPOSES -- Mocking adding a FeedItem to the DB
+        /**
          FeedItem test1FeedItem = new FeedItem("Ted", "http://api.androidhive.info/feed/img/cosmos.jpg", "Please let this work",
          "http://api.androidhive.info/feed/img/nat.jpg", "1403375851930", "http://www.google.com");
          FeedItem test2FeedItem = new FeedItem("Erika", "http://api.androidhive.info/feed/img/nav_drawer.jpg", "Please let this work",
@@ -64,7 +67,7 @@ public class FeedActivity extends AppCompatActivity {
          test1FeedItem.save();
          test2FeedItem.save();
          test3FeedItem.save();
-
+         **/
         //Pull from the Database
         List<FeedItem> feedFromDB = new ArrayList<>();
         feedFromDB = FeedItem.getAll();
@@ -133,11 +136,15 @@ public class FeedActivity extends AppCompatActivity {
         // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
 
-        //noinspection SimplifiableIfStatement
-        //if (id == R.id.action_settings) {
-        //}
+        if(id == R.id.action_search){
+            Log.d("Search", "Pressed Search");
+            // Navigate to Search Page
+            startActivity(new Intent(FeedActivity.this, SearchActivity.class));
+        }
+
         return super.onOptionsItemSelected(item);
     }
+
 
     /**
      * Parsing json reponse and passing the data to feed view list adapter
@@ -167,7 +174,6 @@ public class FeedActivity extends AppCompatActivity {
                 item.setUrl(feedUrl);
 
                 feedItems.add(item);
-
             }
 
             // notify data changes to list adapater

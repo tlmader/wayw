@@ -6,7 +6,6 @@ import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
-import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -63,6 +62,15 @@ public class MainActivity extends AppCompatActivity {
                 Log.d("DataBase", t.password);
                 }
                 Log.d("DataBase Count", " " + test.size());
+
+                /**
+                //TESTING PURPOSES FOR USER PROFILE PIC
+                List<User> all = User.getAll();
+                for(User user: all){
+                    user.setProfilePic("http://api.androidhive.info/feed/img/nat.jpg");
+                    user.save();
+                }
+                 **/
 
                 //Check to make sure User is in the db and the userName/password are equal to user input
                 if ((test.size() != 0) && (test.get(0).userName.equals(loginName.getText().toString()))

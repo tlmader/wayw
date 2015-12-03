@@ -1,21 +1,64 @@
 package uno.wayw;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.ListView;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import uno.wayw.adapter.SearchListAdapter;
+import uno.wayw.data.User;
 
 public class SearchActivity extends AppCompatActivity {
 
+    public SharedPreferences preferences;
+    public User loggedInUser;
+    private ListView listView;
+    private SearchListAdapter listAdapter;
+    private List<User> searchItems;
+
+    @SuppressLint("NewApi")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_search);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+
+        listView = (ListView) findViewById(R.id.searchList);
+
+        searchItems = new ArrayList<User>();
+
+        listAdapter = new SearchListAdapter(this, searchItems);
+        listView.setAdapter(listAdapter);
+
+        //Gets the current loggedIn User
+        preferences = PreferenceManager.getDefaultSharedPreferences(this);
+        //Get the logged user by using SharedPreferences
+        String userName = preferences.getString("loggedInName", "");
+        List<User> name = User.getByUserName(userName);
+        loggedInUser = name.get(0);
+
+        //Pull from the Database
+        List<User> usersFromDB = new ArrayList<>();
+        usersFromDB = User.getAll();
+        for (User t : usersFromDB) {
+            if( !(t.userName.equals(loggedInUser.userName)) )
+            {
+                searchItems.add(t);
+            }
+        }
+        searchItems = usersFromDB;
+        listAdapter.notifyDataSetChanged();
     }
 
     @Override

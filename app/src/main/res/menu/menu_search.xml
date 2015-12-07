@@ -2,10 +2,10 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools" tools:context="uno.wayw.SearchActivity">
 
-    <item android:id="@+id/action_upload" android:title="@string/action_upload"
+    <item android:id="@+id/action_feed" android:title="@string/action_feed"
         android:orderInCategory="100" app:showAsAction="never" />
 
-    <item android:id="@+id/action_feed" android:title="@string/action_feed"
+    <item android:id="@+id/action_upload" android:title="@string/action_upload"
         android:orderInCategory="100" app:showAsAction="never" />
 
 </menu>

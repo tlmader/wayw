@@ -139,11 +139,13 @@ public class FeedActivity extends AppCompatActivity {
         if (id == R.id.action_upload) {
             Log.d("Upload", "Pressed Upload");
             // Navigate to Upload Page
-            startActivity(new Intent(FeedActivity.this, UploadActivity.class));
+            startActivity(new Intent(this, UploadActivity.class));
+            finish();
         } else if (id == R.id.action_search) {
             Log.d("Search", "Pressed Search");
             // Navigate to Search Page
-            startActivity(new Intent(FeedActivity.this, SearchActivity.class));
+            startActivity(new Intent(this, SearchActivity.class));
+            finish();
         }
         return super.onOptionsItemSelected(item);
     }

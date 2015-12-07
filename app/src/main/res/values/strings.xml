@@ -10,9 +10,9 @@
     <string name="title_activity_main">MainActivity</string>
     <string name="title_activity_register">Register</string>
     <string name="title_activity_feed">Feed</string>
-    <string name="title_activity_feed">Search</string>
-    <string name="title_activity_feed">Upload</string>
-    <string name="title_activity_detail_user">DetailUserActivity</string>
+    <string name="title_activity_search">Search</string>
+    <string name="title_activity_upload">Upload</string>
+    <string name="title_activity_detail_user">Details</string>
 
     <!-- Strings related to Settings -->
 
@@ -71,6 +71,4 @@
     <string name="pref_ringtone_silent">Silent</string>
 
     <string name="pref_title_vibrate">Vibrate</string>
-    <string name="title_activity_search">SearchActivity</string>
-    <string name="title_activity_upload">UploadActivity</string>>
 </resources>

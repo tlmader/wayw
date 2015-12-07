@@ -47,11 +47,13 @@ public class UploadActivity extends AppCompatActivity {
         if (id == R.id.action_feed) {
             Log.d("Feed", "Pressed Feed");
             // Navigate to Upload Page
-            startActivity(new Intent(UploadActivity.this, FeedActivity.class));
+            startActivity(new Intent(this, FeedActivity.class));
+            finish();
         } else if (id == R.id.action_search) {
             Log.d("Search", "Pressed Search");
             // Navigate to Search Page
-            startActivity(new Intent(UploadActivity.this, SearchActivity.class));
+            startActivity(new Intent(this, SearchActivity.class));
+            finish();
         }
 
         return super.onOptionsItemSelected(item);

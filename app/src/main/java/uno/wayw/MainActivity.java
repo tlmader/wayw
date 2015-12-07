@@ -50,7 +50,7 @@ public class MainActivity extends AppCompatActivity {
         loginButton.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v) {
-                Log.d("clicked","hit login");
+                Log.d("clicked", "hit login");
                 Log.d("EditText", loginName.getText().toString());
                 Log.d("EditText", loginPassword.getText().toString());
 

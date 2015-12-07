@@ -136,15 +136,17 @@ public class FeedActivity extends AppCompatActivity {
         // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
 
-        if(id == R.id.action_search){
+        if (id == R.id.action_upload) {
+            Log.d("Upload", "Pressed Upload");
+            // Navigate to Upload Page
+            startActivity(new Intent(FeedActivity.this, UploadActivity.class));
+        } else if (id == R.id.action_search) {
             Log.d("Search", "Pressed Search");
             // Navigate to Search Page
             startActivity(new Intent(FeedActivity.this, SearchActivity.class));
         }
-
         return super.onOptionsItemSelected(item);
     }
-
 
     /**
      * Parsing json reponse and passing the data to feed view list adapter

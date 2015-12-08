@@ -7,8 +7,9 @@
     tools:context="uno.wayw.SearchActivityFragment">
 
     <ScrollView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:fillViewport="true">
 
         <LinearLayout
             android:orientation="vertical"
@@ -16,20 +17,19 @@
             android:layout_height="wrap_content">
 
             <SearchView
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_gravity="center"
                 android:layout_marginBottom="10dp"
                 android:id="@+id/searchView"
-                android:layout_alignParentTop="true"
                 android:background="@android:color/holo_blue_light"
-                android:queryHint="Name, Username, etc."
-                android:layout_alignEnd="@+id/searchList"
+                android:queryHint="Title, Style, Owner."
                 android:alpha=".50" />
 
             <ListView
                 android:id="@+id/searchList"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
                 android:divider="@null" />
 
         </LinearLayout>

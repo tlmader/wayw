@@ -23,11 +23,19 @@ public class Fit extends Model {
     public String image;
 
     @Column(name = "Owner")
-    public User owner;
+    public String owner;
 
     public static List<Fit> getAll() {
         return new Select()
                 .from(Fit.class)
+                .execute();
+    }
+
+    public static List<Fit> getByFilterOwner(String searchTerm){
+        return new Select()
+                .from(Fit.class)
+                .where("Owner LIKE ?", new String[]{'%' + searchTerm + '%'})
+                .orderBy("Owner ASC")
                 .execute();
     }
 

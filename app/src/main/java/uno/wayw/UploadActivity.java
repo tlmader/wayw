@@ -1,9 +1,11 @@
 package uno.wayw;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.provider.MediaStore;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -124,6 +126,9 @@ public class UploadActivity extends AppCompatActivity implements View.OnClickLis
                 break;
             case R.id.button_upload:
                 // Validate fit for upload
+                SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(this);
+                String currentUser = preferences.getString("loggedInName", "");
+
                 if (selectedImage == null || selectedImage.toString().equals("")) {
                 Toast.makeText(getApplicationContext(), "Please upload an image of your fit.",
                         Toast.LENGTH_LONG).show();
@@ -133,14 +138,18 @@ public class UploadActivity extends AppCompatActivity implements View.OnClickLis
                 } else if (selectedStyle == null || selectedStyle.equals("Select a style...")) {
                     Toast.makeText(getApplicationContext(), "Please select the style of your fit.",
                             Toast.LENGTH_LONG).show();
+                } else if (currentUser == null) {
+                    Toast.makeText(getApplicationContext(), "Please reload the app and try again.",
+                            Toast.LENGTH_LONG).show();
                 } else {
                     // Creates a new User
-                    Fit fitToUpload = new Fit();
+                    Fit fit = new Fit();
 
-                    fitToUpload.title = titleText.getText().toString();
-                    fitToUpload.style = selectedStyle;
-                    fitToUpload.image = selectedImage.toString();
-                    fitToUpload.save();
+                    fit.title = titleText.getText().toString();
+                    fit.style = selectedStyle;
+                    fit.image = selectedImage.toString();
+                    fit.owner = currentUser;
+                    fit.save();
 
                     // Navigate to Login Page
                     startActivity(new Intent(this, FeedActivity.class));

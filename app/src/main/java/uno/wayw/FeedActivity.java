@@ -186,7 +186,7 @@ public class FeedActivity extends AppCompatActivity {
                 feedItems.add(item);
             }
 
-            // notify data changes to list adapater
+            // notify data changes to list adapter
             listAdapter.notifyDataSetChanged();
         } catch (JSONException e) {
             e.printStackTrace();

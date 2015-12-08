@@ -153,8 +153,7 @@ public class UploadActivity extends AppCompatActivity implements View.OnClickLis
                     // Creates a new User
                     Fit fit = new Fit();
 
-                    // fit.title = titleText.getText().toString();
-                    fit.title = convertImage(selectedImage);
+                    fit.title = titleText.getText().toString();
                     fit.style = selectedStyle;
                     fit.image = convertImage(selectedImage);
                     fit.owner = currentUser;

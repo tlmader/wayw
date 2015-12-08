@@ -12,6 +12,8 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.ListView;
 
+import com.activeandroid.query.Delete;
+
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -74,8 +76,9 @@ public class FeedActivity extends AppCompatActivity {
         for (Fit t : feedFromDB) {
             feedItems.add(t);
         }
-        feedItems = feedFromDB;
         listAdapter.notifyDataSetChanged();
+
+        // new Delete().from(Fit.class).execute();
 
 /**
  * USED WITH JSON

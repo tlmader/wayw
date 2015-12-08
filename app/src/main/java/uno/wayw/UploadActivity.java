@@ -214,7 +214,7 @@ public class UploadActivity extends AppCompatActivity implements View.OnClickLis
         try {
             Bitmap bitmap = BitmapFactory.decodeStream(getContentResolver().openInputStream(uri));
             ByteArrayOutputStream baos = new ByteArrayOutputStream();
-            bitmap.compress(Bitmap.CompressFormat.PNG, 100, baos);
+            bitmap.compress(Bitmap.CompressFormat.JPEG, 20, baos);
             byte [] b = baos.toByteArray();
             String temp = Base64.encodeToString(b, Base64.DEFAULT);
             return temp;

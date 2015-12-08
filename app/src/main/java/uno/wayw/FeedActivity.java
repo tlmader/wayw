@@ -62,11 +62,11 @@ public class FeedActivity extends AppCompatActivity {
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                User clickedUser = (User)listAdapter.getItem(position);
+                Fit clickedFit = (Fit)listAdapter.getItem(position);
 
                 //Saving the detail User into SharedPreferences
                 SharedPreferences.Editor editor = preferences.edit();
-                editor.putString("detailUser", clickedUser.userName);
+                editor.putString("detailUser", clickedFit.owner);
                 editor.apply();
 
                 // Navigate to Detail Page

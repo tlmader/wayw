@@ -19,7 +19,6 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.android.volley.toolbox.ImageLoader;
-import com.android.volley.toolbox.NetworkImageView;
 
 import java.util.List;
 
@@ -70,8 +69,8 @@ public class FeedListAdapter extends BaseAdapter {
         TextView titleText = (TextView) convertView
                 .findViewById(R.id.txtStatusMsg);
         TextView styleText = (TextView) convertView.findViewById(R.id.txtUrl);
-        NetworkImageView profilePic = (NetworkImageView) convertView
-                .findViewById(R.id.profilePic);
+        //NetworkImageView profilePic = (NetworkImageView) convertView
+        //      .findViewById(R.id.profilePic);
         ImageView feedImageView = (ImageView) convertView
                 .findViewById(R.id.feedImage1);
 

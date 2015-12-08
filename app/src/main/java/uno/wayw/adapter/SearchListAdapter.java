@@ -9,7 +9,6 @@ import android.widget.BaseAdapter;
 import android.widget.TextView;
 
 import com.android.volley.toolbox.ImageLoader;
-import com.android.volley.toolbox.NetworkImageView;
 
 import java.util.List;
 
@@ -60,8 +59,8 @@ public class SearchListAdapter extends BaseAdapter {
         TextView userName = (TextView) convertView.findViewById(R.id.userName);
         TextView name = (TextView) convertView
                 .findViewById(R.id.name);
-        NetworkImageView profilePic = (NetworkImageView) convertView
-                .findViewById(R.id.profilePic);
+        //NetworkImageView profilePic = (NetworkImageView) convertView
+        //        .findViewById(R.id.profilePic);
 
         User person = searchItems.get(position);
 
@@ -72,7 +71,7 @@ public class SearchListAdapter extends BaseAdapter {
         name.setVisibility(View.VISIBLE);
 
         // user profile pic
-        profilePic.setImageUrl(person.getProfilePic(), imageLoader);
+        //breprofilePic.setImageUrl(person.getProfilePic(), imageLoader);
 
         return convertView;
     }

@@ -59,10 +59,7 @@ public class DetailActivity extends AppCompatActivity {
         List<Fit> detailFeedFromDB = new ArrayList<>();
         detailFeedFromDB = Fit.getByOwner(detailUser.userName);
         for (Fit t : detailFeedFromDB) {
-            if( !(t.owner.equals(loggedInUser.userName)) )
-            {
                 detailItems.add(t);
-            }
         }
         listAdapter.notifyDataSetChanged();
     }

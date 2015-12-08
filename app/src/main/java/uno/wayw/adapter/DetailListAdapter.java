@@ -11,14 +11,13 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.android.volley.toolbox.ImageLoader;
-import com.android.volley.toolbox.NetworkImageView;
 
 import java.util.List;
 
-import uno.wayw.FeedImageView;
 import uno.wayw.R;
 import uno.wayw.app.AppController;
 import uno.wayw.data.Fit;
@@ -69,9 +68,9 @@ public class DetailListAdapter extends BaseAdapter {
         TextView titleText = (TextView) convertView
                 .findViewById(R.id.txtStatusMsg);
         TextView styleText = (TextView) convertView.findViewById(R.id.txtUrl);
-        NetworkImageView profilePic = (NetworkImageView) convertView
-                .findViewById(R.id.profilePic);
-        FeedImageView feedImageView = (FeedImageView) convertView
+        //NetworkImageView profilePic = (NetworkImageView) convertView
+        //        .findViewById(R.id.profilePic);
+        ImageView feedImageView = (ImageView) convertView
                 .findViewById(R.id.feedImage1);
 
         Fit item = detailItems.get(position);

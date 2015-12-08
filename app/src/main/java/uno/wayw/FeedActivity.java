@@ -10,19 +10,14 @@ import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ListView;
-
-import com.activeandroid.query.Delete;
-
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import uno.wayw.adapter.FeedListAdapter;
-import uno.wayw.data.FeedItem;
 import uno.wayw.data.Fit;
 import uno.wayw.data.User;
 
@@ -57,20 +52,6 @@ public class FeedActivity extends AppCompatActivity {
         List<User> name = User.getByUserName(userName);
         loggedInUser = name.get(0);
 
-        //TODO: Need to get the string to pull from the phone Photos
-
-        //TESTING PURPOSES -- Mocking adding a FeedItem to the DB
-         /**
-         FeedItem test1FeedItem = new FeedItem("teddy", "http://api.androidhive.info/feed/img/cosmos.jpg", "Please let this work",
-         "http://api.androidhive.info/feed/img/nat.jpg", "1403375851930", "http://www.google.com");
-         FeedItem test2FeedItem = new FeedItem("E", "http://api.androidhive.info/feed/img/nav_drawer.jpg", "Please let this work",
-         "http://api.androidhive.info/feed/img/nat.jpg", "1403375851930", "http://www.google.com");
-         FeedItem test3FeedItem = new FeedItem("teddy", "http://api.androidhive.info/feed/img/discovery_mos.jpg", "Please let this work",
-         "http://api.androidhive.info/feed/img/nat.jpg", "1403375851930", "http://www.google.com");
-         test1FeedItem.save();
-         test2FeedItem.save();
-         test3FeedItem.save();
-          **/
         //Pull from the Database
         List<Fit> feedFromDB = Fit.getAll();
         for (Fit t : feedFromDB) {
@@ -78,51 +59,20 @@ public class FeedActivity extends AppCompatActivity {
         }
         listAdapter.notifyDataSetChanged();
 
-        // new Delete().from(Fit.class).execute();
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                User clickedUser = (User)listAdapter.getItem(position);
 
-/**
- * USED WITH JSON
+                //Saving the detail User into SharedPreferences
+                SharedPreferences.Editor editor = preferences.edit();
+                editor.putString("detailUser", clickedUser.userName);
+                editor.apply();
 
-        // We first check for cached request
-        Cache cache = AppController.getInstance().getRequestQueue().getCache();
-        Cache.Entry entry = cache.get(URL_FEED);
-        if (entry != null) {
-            // fetch the data from cache
-            try {
-                String data = new String(entry.data, "UTF-8");
-                try {
-                    parseJsonFeed(new JSONObject(data));
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
-            } catch (UnsupportedEncodingException e) {
-                e.printStackTrace();
+                // Navigate to Detail Page
+                startActivity(new Intent(FeedActivity.this, DetailActivity.class));
             }
-
-        } else {
-            // making fresh volley request and getting json
-            JsonObjectRequest jsonReq = new JsonObjectRequest(Request.Method.GET,
-                    URL_FEED, (String) null, new Response.Listener<JSONObject>() {
-
-                @Override
-                public void onResponse(JSONObject response) {
-                    VolleyLog.d(TAG, "Response: " + response.toString());
-                    if (response != null) {
-                        parseJsonFeed(response);
-                    }
-                }
-            }, new Response.ErrorListener() {
-
-                @Override
-                public void onErrorResponse(VolleyError error) {
-                    VolleyLog.d(TAG, "Error: " + error.getMessage());
-                }
-            });
-
-            // Adding request to volley request queue
-            AppController.getInstance().addToRequestQueue(jsonReq);
-        }
-**/
+        });
     }
 
     @Override
@@ -158,41 +108,4 @@ public class FeedActivity extends AppCompatActivity {
         }
         return super.onOptionsItemSelected(item);
     }
-
-    /**
-     * Parsing json reponse and passing the data to feed view list adapter
-     * */
-//    private void parseJsonFeed(JSONObject response) {
-//        try {
-//            JSONArray feedArray = response.getJSONArray("feed");
-//
-//            for (int i = 0; i < feedArray.length(); i++) {
-//                JSONObject feedObj = (JSONObject) feedArray.get(i);
-//
-//                FeedItem item = new FeedItem();
-//                //item.setId(feedObj.getInt("id"));
-//                item.setName(feedObj.getString("name"));
-//
-//                // Image might be null sometimes
-//                String image = feedObj.isNull("image") ? null : feedObj
-//                        .getString("image");
-//                item.setImage(image);
-//                item.setStatus(feedObj.getString("status"));
-//                item.setProfilePic(feedObj.getString("profilePic"));
-//                item.setTimeStamp(feedObj.getString("timeStamp"));
-//
-//                // url might be null sometimes
-//                String feedUrl = feedObj.isNull("url") ? null : feedObj
-//                        .getString("url");
-//                item.setUrl(feedUrl);
-//
-//                feedItems.add(item);
-//            }
-//
-//            // notify data changes to list adapter
-//            listAdapter.notifyDataSetChanged();
-//        } catch (JSONException e) {
-//            e.printStackTrace();
-//        }
-//    }
 }

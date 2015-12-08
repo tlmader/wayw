@@ -84,16 +84,24 @@ public class DetailActivity extends AppCompatActivity {
         if(id == R.id.action_feed){
             Log.d("Feed", "Pressed Feed");
             // Navigate to Feed Page
-            startActivity(new Intent(DetailActivity.this, FeedActivity.class));
+            startActivity(new Intent(this, FeedActivity.class));
+            finish();
         }
-        if(id == R.id.action_search){
+        else if(id == R.id.action_signOut) {
+            // Navigate to Upload Page
+            startActivity(new Intent(this, MainActivity.class));
+            finish();
+        }
+        else if(id == R.id.action_search){
             Log.d("Search", "Pressed Search");
             // Navigate to Search Page
-            startActivity(new Intent(DetailActivity.this, SearchActivity.class));
+            startActivity(new Intent(this, SearchActivity.class));
+            finish();
         }else if (id == R.id.action_upload) {
             Log.d("Upload", "Pressed Upload");
             // Navigate to Upload Page
-            startActivity(new Intent(DetailActivity.this, UploadActivity.class));
+            startActivity(new Intent(this, UploadActivity.class));
+            finish();
         }
         return super.onOptionsItemSelected(item);
     }

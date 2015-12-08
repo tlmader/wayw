@@ -141,7 +141,13 @@ public class FeedActivity extends AppCompatActivity {
             // Navigate to Upload Page
             startActivity(new Intent(this, UploadActivity.class));
             finish();
-        } else if (id == R.id.action_search) {
+        }
+        else if(id == R.id.action_signOut) {
+            // Navigate to Upload Page
+            startActivity(new Intent(this, MainActivity.class));
+            finish();
+        }
+        else if (id == R.id.action_search) {
             Log.d("Search", "Pressed Search");
             // Navigate to Search Page
             startActivity(new Intent(this, SearchActivity.class));

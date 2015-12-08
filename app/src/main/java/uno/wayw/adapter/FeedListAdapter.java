@@ -21,10 +21,10 @@ import com.android.volley.toolbox.NetworkImageView;
 
 import java.util.List;
 
+import uno.wayw.FeedImageView;
 import uno.wayw.R;
 import uno.wayw.app.AppController;
 import uno.wayw.data.FeedItem;
-import uno.wayw.FeedImageView;
 
 public class FeedListAdapter extends BaseAdapter {
     private Activity activity;

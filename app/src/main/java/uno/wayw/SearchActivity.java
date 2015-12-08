@@ -158,7 +158,12 @@ public class SearchActivity extends AppCompatActivity {
             // Navigate to Search Page
             startActivity(new Intent(this, FeedActivity.class));
             finish();
-        } else if (id == R.id.action_upload) {
+        }
+        else if(id == R.id.action_signOut) {
+            // Navigate to Upload Page
+            startActivity(new Intent(this, MainActivity.class));
+            finish();
+        }else if (id == R.id.action_upload) {
             Log.d("Upload", "Pressed Upload");
             // Navigate to Upload Page
             startActivity(new Intent(this, UploadActivity.class));

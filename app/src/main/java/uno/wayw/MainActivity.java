@@ -69,8 +69,8 @@ public class MainActivity extends AppCompatActivity {
                 for(User user: all){
                     user.setProfilePic("http://api.androidhive.info/feed/img/nat.jpg");
                     user.save();
-                }
-                 **/
+                }**/
+
 
                 //Check to make sure User is in the db and the userName/password are equal to user input
                 if ((test.size() != 0) && (test.get(0).userName.equals(loginName.getText().toString()))

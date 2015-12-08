@@ -6,6 +6,7 @@ package uno.wayw.adapter;
 
 import android.app.Activity;
 import android.content.Context;
+import android.net.Uri;
 import android.text.Html;
 import android.text.TextUtils;
 import android.text.format.DateUtils;
@@ -25,14 +26,15 @@ import uno.wayw.FeedImageView;
 import uno.wayw.R;
 import uno.wayw.app.AppController;
 import uno.wayw.data.FeedItem;
+import uno.wayw.data.Fit;
 
 public class FeedListAdapter extends BaseAdapter {
     private Activity activity;
     private LayoutInflater inflater;
-    private List<FeedItem> feedItems;
+    private List<Fit> feedItems;
     ImageLoader imageLoader = AppController.getInstance().getImageLoader();
 
-    public FeedListAdapter(Activity activity, List<FeedItem> feedItems) {
+    public FeedListAdapter(Activity activity, List<Fit> feedItems) {
         this.activity = activity;
         this.feedItems = feedItems;
     }
@@ -63,66 +65,54 @@ public class FeedListAdapter extends BaseAdapter {
         if (imageLoader == null)
             imageLoader = AppController.getInstance().getImageLoader();
 
-        TextView name = (TextView) convertView.findViewById(R.id.name);
+        TextView ownerText = (TextView) convertView.findViewById(R.id.name);
         TextView timestamp = (TextView) convertView
                 .findViewById(R.id.timestamp);
-        TextView statusMsg = (TextView) convertView
+        TextView titleText = (TextView) convertView
                 .findViewById(R.id.txtStatusMsg);
-        TextView url = (TextView) convertView.findViewById(R.id.txtUrl);
+        TextView styleText = (TextView) convertView.findViewById(R.id.txtUrl);
         NetworkImageView profilePic = (NetworkImageView) convertView
                 .findViewById(R.id.profilePic);
         FeedImageView feedImageView = (FeedImageView) convertView
                 .findViewById(R.id.feedImage1);
 
-        FeedItem item = feedItems.get(position);
+        Fit item = feedItems.get(position);
 
-        name.setText(item.getName());
+        ownerText.setText(item.getOwner());
 
         // Converting timestamp into x ago format
         CharSequence timeAgo = DateUtils.getRelativeTimeSpanString(
-                Long.parseLong(item.getTimeStamp()),
+                Long.parseLong(item.getTimestamp()),
                 System.currentTimeMillis(), DateUtils.SECOND_IN_MILLIS);
         timestamp.setText(timeAgo);
 
         // Chcek for empty status message
-        if (!TextUtils.isEmpty(item.getStatus())) {
-            statusMsg.setText(item.getStatus());
-            statusMsg.setVisibility(View.VISIBLE);
+        if (!TextUtils.isEmpty(item.getTitle())) {
+            titleText.setText(item.getTitle());
+            titleText.setVisibility(View.VISIBLE);
         } else {
             // status is empty, remove from view
-            statusMsg.setVisibility(View.GONE);
+            titleText.setVisibility(View.GONE);
         }
 
-        // Checking for null feed url
-        if (item.getUrl() != null) {
-            url.setText(Html.fromHtml("<a href=\"" + item.getUrl() + "\">"
-                    + item.getUrl() + "</a> "));
-
-            // Making url clickable
-            url.setMovementMethod(LinkMovementMethod.getInstance());
-            url.setVisibility(View.VISIBLE);
+        // Checking for style
+        if (item.getStyle() != null) {
+            styleText.setText("#" + item.getStyle().toLowerCase());
+            styleText.setVisibility(View.VISIBLE);
         } else {
             // url is null, remove from the view
-            url.setVisibility(View.GONE);
+            styleText.setVisibility(View.GONE);
         }
 
         // user profile pic
-        profilePic.setImageUrl(item.getProfilePic(), imageLoader);
+
+        final String TEMP_PIC = ("https://media-members.nationalgeographic.com/static-media/images/css_images/nationalGeographic_default_avatar.jpg");
+        profilePic.setImageUrl(TEMP_PIC, imageLoader);
 
         // Feed image
         if (item.getImage() != null) {
-            feedImageView.setImageUrl(item.getImage(), imageLoader);
-            feedImageView.setVisibility(View.VISIBLE);
-            feedImageView
-                    .setResponseObserver(new FeedImageView.ResponseObserver() {
-                        @Override
-                        public void onError() {
-                        }
-
-                        @Override
-                        public void onSuccess() {
-                        }
-                    });
+            Uri imageUri = Uri.parse(item.getImage());
+            feedImageView.setImageURI(imageUri);
         } else {
             feedImageView.setVisibility(View.GONE);
         }

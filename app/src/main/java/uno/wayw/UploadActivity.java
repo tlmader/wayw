@@ -25,7 +25,10 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import uno.wayw.data.FeedItem;
@@ -149,6 +152,7 @@ public class UploadActivity extends AppCompatActivity implements View.OnClickLis
                     fit.style = selectedStyle;
                     fit.image = selectedImage.toString();
                     fit.owner = currentUser;
+                    fit.timestamp = Long.toString(System.currentTimeMillis());
                     fit.save();
 
                     // Navigate to Login Page

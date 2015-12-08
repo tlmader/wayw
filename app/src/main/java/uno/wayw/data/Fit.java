@@ -25,6 +25,49 @@ public class Fit extends Model {
     @Column(name = "Owner")
     public String owner;
 
+    public String getTitle() {
+        return title;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
+    }
+
+    public String getStyle() {
+        return style;
+    }
+
+    public void setStyle(String style) {
+        this.style = style;
+    }
+
+    public String getImage() {
+        return image;
+    }
+
+    public void setImage(String image) {
+        this.image = image;
+    }
+
+    public String getOwner() {
+        return owner;
+    }
+
+    public void setOwner(String owner) {
+        this.owner = owner;
+    }
+
+    public String getTimestamp() {
+        return timestamp;
+    }
+
+    public void setTimestamp(String timestamp) {
+        this.timestamp = timestamp;
+    }
+
+    @Column(name = "Timestamp")
+    public String timestamp;
+
     public static List<Fit> getAll() {
         return new Select()
                 .from(Fit.class)
@@ -35,7 +78,7 @@ public class Fit extends Model {
         return new Select()
                 .from(Fit.class)
                 .where("Owner LIKE ?", new String[]{'%' + searchTerm + '%'})
-                .orderBy("Owner ASC")
+                .orderBy("Title ASC")
                 .execute();
     }
 

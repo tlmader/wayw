@@ -8,12 +8,8 @@ import android.app.Activity;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.net.Uri;
-import android.os.AsyncTask;
-import android.text.Html;
 import android.text.TextUtils;
 import android.text.format.DateUtils;
-import android.text.method.LinkMovementMethod;
 import android.util.Base64;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -22,17 +18,13 @@ import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.activeandroid.query.Delete;
 import com.android.volley.toolbox.ImageLoader;
 import com.android.volley.toolbox.NetworkImageView;
 
-import java.lang.ref.WeakReference;
 import java.util.List;
 
-import uno.wayw.FeedImageView;
 import uno.wayw.R;
 import uno.wayw.app.AppController;
-import uno.wayw.data.FeedItem;
 import uno.wayw.data.Fit;
 
 public class FeedListAdapter extends BaseAdapter {
@@ -80,7 +72,7 @@ public class FeedListAdapter extends BaseAdapter {
         TextView styleText = (TextView) convertView.findViewById(R.id.txtUrl);
         NetworkImageView profilePic = (NetworkImageView) convertView
                 .findViewById(R.id.profilePic);
-        FeedImageView feedImageView = (FeedImageView) convertView
+        ImageView feedImageView = (ImageView) convertView
                 .findViewById(R.id.feedImage1);
 
         Fit item = feedItems.get(position);
@@ -93,7 +85,7 @@ public class FeedListAdapter extends BaseAdapter {
                 System.currentTimeMillis(), DateUtils.SECOND_IN_MILLIS);
         timestamp.setText(timeAgo);
 
-        // Chcek for empty status message
+        // Check for empty status message
         if (!TextUtils.isEmpty(item.getTitle())) {
             titleText.setText(item.getTitle());
         } else {

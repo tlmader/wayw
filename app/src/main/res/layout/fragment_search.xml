@@ -6,20 +6,34 @@
     android:paddingBottom="@dimen/activity_vertical_margin" tools:showIn="@layout/activity_search"
     tools:context="uno.wayw.SearchActivityFragment">
 
-    <ListView
-        android:id="@+id/searchList"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:divider="@null" />
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
 
-    <SearchView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/searchView"
-        android:layout_alignParentTop="true"
-        android:background="@android:color/holo_blue_light"
-        android:queryHint="Name, Username, etc."
-        android:layout_alignEnd="@+id/searchList"
-        android:alpha=".50" />
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <SearchView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="10dp"
+                android:id="@+id/searchView"
+                android:layout_alignParentTop="true"
+                android:background="@android:color/holo_blue_light"
+                android:queryHint="Name, Username, etc."
+                android:layout_alignEnd="@+id/searchList"
+                android:alpha=".50" />
+
+            <ListView
+                android:id="@+id/searchList"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:divider="@null" />
+
+        </LinearLayout>
+
+    </ScrollView>
 
 </RelativeLayout>

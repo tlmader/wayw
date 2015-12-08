@@ -33,8 +33,8 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void createInterface(){
-        registerButton = (Button) findViewById(R.id.registerButton);
-        loginButton = (Button) findViewById(R.id.loginButton);
+        registerButton = (Button) findViewById(R.id.button_register);
+        loginButton = (Button) findViewById(R.id.button_login);
         loginName = (EditText) findViewById(R.id.loginName);
         loginPassword = (EditText) findViewById(R.id.loginPassword);
 

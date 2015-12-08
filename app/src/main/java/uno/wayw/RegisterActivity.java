@@ -114,6 +114,7 @@ public class RegisterActivity extends AppCompatActivity {
 
                     // Navigate to Login Page
                     startActivity(new Intent(RegisterActivity.this, MainActivity.class));
+                    finish();
                 } else if (!(test.size() == 0)) {
                     Toast.makeText(getApplicationContext(), "Sorry, username is already in use. Please try again.",
                             Toast.LENGTH_LONG).show();

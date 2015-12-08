@@ -58,7 +58,7 @@ public class UploadActivity extends AppCompatActivity implements View.OnClickLis
 
         if (id == R.id.action_feed) {
             Log.d("Feed", "Pressed Feed");
-            // Navigate to Upload Page
+            // Navigate to Feed Page
             startActivity(new Intent(this, FeedActivity.class));
             finish();
         } else if (id == R.id.action_search) {
@@ -66,8 +66,11 @@ public class UploadActivity extends AppCompatActivity implements View.OnClickLis
             // Navigate to Search Page
             startActivity(new Intent(this, SearchActivity.class));
             finish();
+        } else if(id == R.id.action_logoff) {
+            // Navigate to Main Page
+            startActivity(new Intent(this, MainActivity.class));
+            finish();
         }
-
         return super.onOptionsItemSelected(item);
     }
 

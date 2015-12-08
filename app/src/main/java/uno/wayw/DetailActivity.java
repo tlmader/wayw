@@ -87,8 +87,8 @@ public class DetailActivity extends AppCompatActivity {
             startActivity(new Intent(this, FeedActivity.class));
             finish();
         }
-        else if(id == R.id.action_signOut) {
-            // Navigate to Upload Page
+        else if(id == R.id.action_logoff) {
+            // Navigate to Main Page
             startActivity(new Intent(this, MainActivity.class));
             finish();
         }

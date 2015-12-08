@@ -2,13 +2,13 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools" tools:context="uno.wayw.MenuView">
 
-    <item android:id="@+id/action_upload" android:title="@string/action_upload"
-        android:orderInCategory="100" app:showAsAction="never" />
-
     <item android:id="@+id/action_search" android:title="@string/action_search"
         android:orderInCategory="100" app:showAsAction="never" />
 
-    <item android:id="@+id/action_signOut" android:title="Sign Out"
+    <item android:id="@+id/action_upload" android:title="@string/action_upload"
+        android:orderInCategory="100" app:showAsAction="never" />
+
+    <item android:id="@+id/action_logoff" android:title="@string/action_logout"
         android:orderInCategory="100" app:showAsAction="never" />
 
 </menu>

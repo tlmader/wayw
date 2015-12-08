@@ -135,4 +135,11 @@ public class FeedItem extends Model{
                 .from(FeedItem.class)
                 .execute();
     }
+
+    public static List<FeedItem> getByUserName(String searchUserName){
+        return new Select()
+                .from(FeedItem.class)
+                .where("UserName = ?", searchUserName)
+                .execute();
+    }
 }

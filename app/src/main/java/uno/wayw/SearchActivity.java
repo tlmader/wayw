@@ -10,6 +10,8 @@ import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.SearchView;
 
@@ -112,13 +114,27 @@ public class SearchActivity extends AppCompatActivity {
                 List<User> usersFromDB = new ArrayList<>();
                 usersFromDB = User.getAll();
                 for (User t : usersFromDB) {
-                    if( !(t.userName.equals(loggedInUser.userName)) )
-                    {
+                    if (!(t.userName.equals(loggedInUser.userName))) {
                         searchItems.add(t);
                     }
                 }
                 listAdapter.notifyDataSetChanged();
                 return false;
+            }
+        });
+
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                User clickedUser = (User)listAdapter.getItem(position);
+
+                //Saving the detail User into SharedPreferences
+                SharedPreferences.Editor editor = preferences.edit();
+                editor.putString("detailUser", clickedUser.userName);
+                editor.apply();
+
+                // Navigate to Detail Page
+                startActivity(new Intent(SearchActivity.this, DetailActivity.class));
             }
         });
     }

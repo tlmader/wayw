@@ -1,0 +1,12 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools" tools:context="uno.wayw.DetailActivity">
+    <item android:id="@+id/action_upload" android:title="@string/action_upload"
+        android:orderInCategory="100" app:showAsAction="never" />
+
+    <item android:id="@+id/action_search" android:title="@string/action_search"
+        android:orderInCategory="100" app:showAsAction="never" />
+
+    <item android:id="@+id/action_feed" android:title="@string/action_feed"
+        android:orderInCategory="100" app:showAsAction="never" />
+</menu>

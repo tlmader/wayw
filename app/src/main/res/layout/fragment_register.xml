@@ -69,17 +69,4 @@
         android:layout_centerHorizontal="true"
         android:layout_marginTop="91dp" />
 
-    <Spinner
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:ems="10"
-        android:id="@+id/spinner"
-        android:layout_alignStart="@+id/registerPassword"
-        android:layout_below="@+id/registerPassword"
-        android:layout_marginTop="32dp"
-        android:spinnerMode="dropdown"
-        android:hint="Genre"
-        android:background="@android:color/white"
-        android:layout_alignEnd="@+id/registerPassword" />
-
 </RelativeLayout>

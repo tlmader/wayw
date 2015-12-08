@@ -173,7 +173,7 @@ public class FeedActivity extends AppCompatActivity {
                 // Image might be null sometimes
                 String image = feedObj.isNull("image") ? null : feedObj
                         .getString("image");
-                item.setImge(image);
+                item.setImage(image);
                 item.setStatus(feedObj.getString("status"));
                 item.setProfilePic(feedObj.getString("profilePic"));
                 item.setTimeStamp(feedObj.getString("timeStamp"));

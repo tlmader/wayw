@@ -87,15 +87,6 @@ public class SearchActivity extends AppCompatActivity {
                         }
                     }
                 }
-                List<User> filterGenre = new ArrayList<User>();
-                filterGenre = User.getByFilterGenre(query);
-                for (User t : filterGenre) {
-                    if (!(t.userName.equals(loggedInUser.userName))) {
-                        if(! searchItems.contains(t)) {
-                            searchItems.add(t);
-                        }
-                    }
-                }
                 listAdapter.notifyDataSetChanged();
                 return false;
             }

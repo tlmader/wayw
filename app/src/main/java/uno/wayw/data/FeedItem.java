@@ -82,11 +82,11 @@ public class FeedItem extends Model{
         this.userName = name;
     }
 
-    public String getImge() {
+    public String getImage() {
         return image;
     }
 
-    public void setImge(String image) {
+    public void setImage(String image) {
         this.image = image;
     }
 

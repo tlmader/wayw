@@ -12,7 +12,7 @@ import java.util.List;
  */
 
 @Table(name = "User")
-public class User extends Model{
+public class User extends Model {
 
     @Column(name = "Name")
     public String name;
@@ -22,9 +22,6 @@ public class User extends Model{
 
     @Column(name = "Password")
     public String password;
-
-    @Column(name = "Genre")
-    public String genre;
 
     @Column(name = "ProfilePic")
     public String profilePic;
@@ -63,14 +60,6 @@ public class User extends Model{
         this.password = password;
     }
 
-    public String getGenre() {
-        return genre;
-    }
-
-    public void setGenre(String genre) {
-        this.genre = genre;
-    }
-
     public String getProfilePic() {
         return profilePic;
     }
@@ -104,14 +93,6 @@ public class User extends Model{
         return new Select()
                 .from(User.class)
                 .where("Name LIKE ?", new String[]{'%' + searchTerm + '%'})
-                .orderBy("Name ASC")
-                .execute();
-    }
-
-    public static List<User> getByFilterGenre(String searchTerm){
-        return new Select()
-                .from(User.class)
-                .where("Genre LIKE ?", new String[]{'%' + searchTerm + '%'})
                 .orderBy("Name ASC")
                 .execute();
     }

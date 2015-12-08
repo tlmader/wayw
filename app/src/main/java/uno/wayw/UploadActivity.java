@@ -1,6 +1,7 @@
 package uno.wayw;
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
@@ -12,15 +13,31 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.Spinner;
+import android.widget.TextView;
+import android.widget.Toast;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import uno.wayw.data.FeedItem;
+import uno.wayw.data.Fit;
+import uno.wayw.data.User;
 
 public class UploadActivity extends AppCompatActivity implements View.OnClickListener {
 
-    ImageView imageToUpload;
+    ImageView imageView;
     Button uploadButton;
-    EditText nameText;
+    EditText titleText;
+    Spinner stylesSpinner;
+    String selectedStyle;
+    Uri selectedImage;
 
     private static final int RESULT_LOAD_IMAGE = 1;
 
@@ -33,12 +50,69 @@ public class UploadActivity extends AppCompatActivity implements View.OnClickLis
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        imageToUpload = (ImageView) findViewById(R.id.image_upload);
+        imageView = (ImageView) findViewById(R.id.image_upload);
         uploadButton = (Button) findViewById(R.id.button_upload);
-        nameText = (EditText) findViewById(R.id.text_upload);
+        titleText = (EditText) findViewById(R.id.text_upload_title);
+        stylesSpinner = (Spinner) findViewById(R.id.spinner);
 
-        imageToUpload.setOnClickListener(this);
+        imageView.setOnClickListener(this);
         uploadButton.setOnClickListener(this);
+
+        ArrayList<String> styleList = new ArrayList<>();
+        //TODO: Add more genre categories
+        styleList.add("Select a style...");
+        styleList.add("High Fashion");
+        styleList.add("Menswear");
+        styleList.add("Prep");
+        styleList.add("Smart Casual");
+        styleList.add("Sportswear");
+        styleList.add("Urban");
+        styleList.add("Techwear");
+        styleList.add("Vintage");
+        styleList.add("Other")
+        ;
+        //Create adapter for spinner
+        ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, styleList){
+            @Override
+            public boolean isEnabled (int position){
+                if(position == 0){
+                    return false;
+                }
+                else{
+                    return true;
+                }
+            }
+            @Override
+            public View getDropDownView(int position, View convertView, ViewGroup parent){
+                View view = super.getDropDownView(position, convertView, parent);
+                TextView tv = (TextView) view;
+                if(position == 0){
+                    tv.setTextColor(Color.GRAY);
+                }
+                else{
+                    tv.setTextColor(Color.BLACK);
+                }
+                return view;
+            }
+        };
+
+        //Drop down layout type
+        dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        //Attaching data adapter to spinner
+        stylesSpinner.setAdapter(dataAdapter);
+
+        stylesSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                if (position > 0) {
+                    selectedStyle = parent.getItemAtPosition(position).toString();
+                }
+            }
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
     }
 
     @Override
@@ -49,6 +123,29 @@ public class UploadActivity extends AppCompatActivity implements View.OnClickLis
                 startActivityForResult(galleryIntent, RESULT_LOAD_IMAGE);
                 break;
             case R.id.button_upload:
+                // Validate fit for upload
+                if (selectedImage == null || selectedImage.toString().equals("")) {
+                Toast.makeText(getApplicationContext(), "Please upload an image of your fit.",
+                        Toast.LENGTH_LONG).show();
+                } else if (titleText.getText().toString().equals("")) {
+                    Toast.makeText(getApplicationContext(), "Please enter a title for your fit.",
+                            Toast.LENGTH_LONG).show();
+                } else if (selectedStyle == null || selectedStyle.equals("Select a style...")) {
+                    Toast.makeText(getApplicationContext(), "Please select the style of your fit.",
+                            Toast.LENGTH_LONG).show();
+                } else {
+                    // Creates a new User
+                    Fit fitToUpload = new Fit();
+
+                    fitToUpload.title = titleText.getText().toString();
+                    fitToUpload.style = selectedStyle;
+                    fitToUpload.image = selectedImage.toString();
+                    fitToUpload.save();
+
+                    // Navigate to Login Page
+                    startActivity(new Intent(this, FeedActivity.class));
+                    finish();
+                }
                 break;
         }
     }
@@ -58,8 +155,8 @@ public class UploadActivity extends AppCompatActivity implements View.OnClickLis
         super.onActivityResult(requestCode, resultCode, data);
 
         if (requestCode == RESULT_LOAD_IMAGE && resultCode == RESULT_OK && data != null) {
-            Uri selectedImage = data.getData();
-            imageToUpload.setImageURI(selectedImage);
+            selectedImage = data.getData();
+            imageView.setImageURI(selectedImage);
         }
     }
 

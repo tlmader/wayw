@@ -27,10 +27,18 @@
                 android:layout_height="150dp" />
 
             <EditText
-                android:id="@+id/text_upload"
-                android:hint="Title"
+                android:id="@+id/text_upload_title"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
+                android:layout_height="wrap_content"
+                android:hint="Title" />
+
+            <Spinner
+                android:id="@+id/spinner"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:spinnerMode="dropdown"
+                android:ems="10"
+                android:hint="Style" />
 
             <Button
                 android:id="@+id/button_upload"

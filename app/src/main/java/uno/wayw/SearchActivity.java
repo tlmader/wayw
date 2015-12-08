@@ -10,7 +10,10 @@ import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ListView;
+import android.widget.SearchView;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -57,8 +60,83 @@ public class SearchActivity extends AppCompatActivity {
                 searchItems.add(t);
             }
         }
-        searchItems = usersFromDB;
         listAdapter.notifyDataSetChanged();
+
+        SearchView searchView = (SearchView) findViewById(R.id.searchView);
+
+        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                Log.d("Filter", query);
+                searchItems.clear();
+                List<User> filterUserName = new ArrayList<User>();
+                filterUserName = User.getByFilterUserName(query);
+                for (User t : filterUserName) {
+                    if (!(t.userName.equals(loggedInUser.userName))) {
+                        if(!searchItems.contains(t)) {
+                            searchItems.add(t);
+                        }
+                    }
+                }
+                List<User> filterName = new ArrayList<User>();
+                filterName = User.getByFilterName(query);
+                for (User t : filterName) {
+                    if (!(t.userName.equals(loggedInUser.userName))) {
+                        if(! searchItems.contains(t)) {
+                            searchItems.add(t);
+                        }
+                    }
+                }
+                List<User> filterGenre = new ArrayList<User>();
+                filterGenre = User.getByFilterGenre(query);
+                for (User t : filterGenre) {
+                    if (!(t.userName.equals(loggedInUser.userName))) {
+                        if(! searchItems.contains(t)) {
+                            searchItems.add(t);
+                        }
+                    }
+                }
+                listAdapter.notifyDataSetChanged();
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                return false;
+            }
+        });
+
+        searchView.setOnCloseListener(new SearchView.OnCloseListener() {
+            @Override
+            public boolean onClose() {
+                //Populating the list with all the Users again
+                searchItems.clear();
+                List<User> usersFromDB = new ArrayList<>();
+                usersFromDB = User.getAll();
+                for (User t : usersFromDB) {
+                    if (!(t.userName.equals(loggedInUser.userName))) {
+                        searchItems.add(t);
+                    }
+                }
+                listAdapter.notifyDataSetChanged();
+                return false;
+            }
+        });
+
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                User clickedUser = (User)listAdapter.getItem(position);
+
+                //Saving the detail User into SharedPreferences
+                SharedPreferences.Editor editor = preferences.edit();
+                editor.putString("detailUser", clickedUser.userName);
+                editor.apply();
+
+                // Navigate to Detail Page
+                startActivity(new Intent(SearchActivity.this, DetailActivity.class));
+            }
+        });
     }
 
     @Override
@@ -80,7 +158,12 @@ public class SearchActivity extends AppCompatActivity {
             // Navigate to Search Page
             startActivity(new Intent(this, FeedActivity.class));
             finish();
-        } else if (id == R.id.action_upload) {
+        }
+        else if(id == R.id.action_signOut) {
+            // Navigate to Upload Page
+            startActivity(new Intent(this, MainActivity.class));
+            finish();
+        }else if (id == R.id.action_upload) {
             Log.d("Upload", "Pressed Upload");
             // Navigate to Upload Page
             startActivity(new Intent(this, UploadActivity.class));
@@ -88,5 +171,4 @@ public class SearchActivity extends AppCompatActivity {
         }
         return super.onOptionsItemSelected(item);
     }
-
 }

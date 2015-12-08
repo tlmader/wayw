@@ -57,17 +57,17 @@ public class FeedActivity extends AppCompatActivity {
         //TODO: Need to get the string to pull from the phone Photos
 
         //TESTING PURPOSES -- Mocking adding a FeedItem to the DB
-        /**
-         FeedItem test1FeedItem = new FeedItem("Ted", "http://api.androidhive.info/feed/img/cosmos.jpg", "Please let this work",
+         /**
+         FeedItem test1FeedItem = new FeedItem("teddy", "http://api.androidhive.info/feed/img/cosmos.jpg", "Please let this work",
          "http://api.androidhive.info/feed/img/nat.jpg", "1403375851930", "http://www.google.com");
-         FeedItem test2FeedItem = new FeedItem("Erika", "http://api.androidhive.info/feed/img/nav_drawer.jpg", "Please let this work",
+         FeedItem test2FeedItem = new FeedItem("E", "http://api.androidhive.info/feed/img/nav_drawer.jpg", "Please let this work",
          "http://api.androidhive.info/feed/img/nat.jpg", "1403375851930", "http://www.google.com");
-         FeedItem test3FeedItem = new FeedItem("Ted", "http://api.androidhive.info/feed/img/discovery_mos.jpg", "Please let this work",
+         FeedItem test3FeedItem = new FeedItem("teddy", "http://api.androidhive.info/feed/img/discovery_mos.jpg", "Please let this work",
          "http://api.androidhive.info/feed/img/nat.jpg", "1403375851930", "http://www.google.com");
          test1FeedItem.save();
          test2FeedItem.save();
          test3FeedItem.save();
-         **/
+          **/
         //Pull from the Database
         List<FeedItem> feedFromDB = new ArrayList<>();
         feedFromDB = FeedItem.getAll();
@@ -141,7 +141,13 @@ public class FeedActivity extends AppCompatActivity {
             // Navigate to Upload Page
             startActivity(new Intent(this, UploadActivity.class));
             finish();
-        } else if (id == R.id.action_search) {
+        }
+        else if(id == R.id.action_signOut) {
+            // Navigate to Upload Page
+            startActivity(new Intent(this, MainActivity.class));
+            finish();
+        }
+        else if (id == R.id.action_search) {
             Log.d("Search", "Pressed Search");
             // Navigate to Search Page
             startActivity(new Intent(this, SearchActivity.class));

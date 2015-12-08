@@ -1,9 +1,5 @@
 package uno.wayw.adapter;
 
-/**
- * Created by Breezy on 11/29/15.
- */
-
 import android.app.Activity;
 import android.content.Context;
 import android.text.Html;
@@ -26,25 +22,28 @@ import uno.wayw.R;
 import uno.wayw.app.AppController;
 import uno.wayw.data.FeedItem;
 
-public class FeedListAdapter extends BaseAdapter {
+/**
+ * Created by Breezy on 12/7/15.
+ */
+public class DetailListAdapter extends BaseAdapter {
     private Activity activity;
     private LayoutInflater inflater;
-    private List<FeedItem> feedItems;
+    private List<FeedItem> detailItems;
     ImageLoader imageLoader = AppController.getInstance().getImageLoader();
 
-    public FeedListAdapter(Activity activity, List<FeedItem> feedItems) {
+    public DetailListAdapter(Activity activity, List<FeedItem> feedItems) {
         this.activity = activity;
-        this.feedItems = feedItems;
+        this.detailItems = feedItems;
     }
 
     @Override
     public int getCount() {
-        return feedItems.size();
+        return detailItems.size();
     }
 
     @Override
     public Object getItem(int location) {
-        return feedItems.get(location);
+        return detailItems.get(location);
     }
 
     @Override
@@ -59,7 +58,7 @@ public class FeedListAdapter extends BaseAdapter {
             inflater = (LayoutInflater) activity
                     .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         if (convertView == null)
-            convertView = inflater.inflate(R.layout.feed_item, null);
+            convertView = inflater.inflate(R.layout.detail_item, null);
         if (imageLoader == null)
             imageLoader = AppController.getInstance().getImageLoader();
 
@@ -74,7 +73,7 @@ public class FeedListAdapter extends BaseAdapter {
         FeedImageView feedImageView = (FeedImageView) convertView
                 .findViewById(R.id.feedImage1);
 
-        FeedItem item = feedItems.get(position);
+        FeedItem item = detailItems.get(position);
 
         name.setText(item.getName());
 
@@ -129,5 +128,4 @@ public class FeedListAdapter extends BaseAdapter {
 
         return convertView;
     }
-
 }

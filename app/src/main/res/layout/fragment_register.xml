@@ -11,18 +11,21 @@
     tools:context="uno.wayw.RegisterActivityFragment">
 
     <TextView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:text="Please Fill Out the Information"
         android:textColor="@android:color/white"
         android:textAlignment="center"
-        android:textSize="20dp" />
+        android:textSize="20dp"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:id="@+id/textView" />
 
     <EditText
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:inputType="textPersonName"
-        android:text="Name"
+        android:hint="Name"
         android:textColor="@android:color/black"
         android:background="@android:color/white"
         android:ems="10"
@@ -35,7 +38,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:inputType="textPersonName"
-        android:text="UserName"
+        android:hint="Username"
         android:textColor="@android:color/black"
         android:background="@android:color/white"
         android:ems="10"
@@ -48,7 +51,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:inputType="textPersonName"
-        android:text="Password"
+        android:hint="Password"
         android:textColor="@android:color/black"
         android:background="@android:color/white"
         android:ems="10"
@@ -65,5 +68,18 @@
         android:layout_below="@+id/registerPassword"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="91dp" />
+
+    <Spinner
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:id="@+id/spinner"
+        android:layout_alignStart="@+id/registerPassword"
+        android:layout_below="@+id/registerPassword"
+        android:layout_marginTop="32dp"
+        android:spinnerMode="dropdown"
+        android:hint="Genre"
+        android:background="@android:color/white"
+        android:layout_alignEnd="@+id/registerPassword" />
 
 </RelativeLayout>

@@ -91,4 +91,28 @@ public class User extends Model{
                 .where("UserName = ?", searchUserName)
                 .execute();
     }
+
+    public static List<User> getByFilterUserName(String searchTerm){
+        return new Select()
+                .from(User.class)
+                .where("UserName LIKE ?", new String[]{'%' + searchTerm + '%'})
+                .orderBy("Name ASC")
+                .execute();
+    }
+
+    public static List<User> getByFilterName(String searchTerm){
+        return new Select()
+                .from(User.class)
+                .where("Name LIKE ?", new String[]{'%' + searchTerm + '%'})
+                .orderBy("Name ASC")
+                .execute();
+    }
+
+    public static List<User> getByFilterGenre(String searchTerm){
+        return new Select()
+                .from(User.class)
+                .where("Genre LIKE ?", new String[]{'%' + searchTerm + '%'})
+                .orderBy("Name ASC")
+                .execute();
+    }
 }

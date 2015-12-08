@@ -10,24 +10,36 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.ImageView;
 
-public class UploadActivity extends AppCompatActivity {
+public class UploadActivity extends AppCompatActivity implements View.OnClickListener {
+
+    ImageView imageView;
+    Button uploadButton;
+    EditText nameText;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_upload);
+
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
-            }
-        });
+        imageView = (ImageView) findViewById(R.id.image_upload);
+        uploadButton = (Button) findViewById(R.id.button_upload);
+        nameText = (EditText) findViewById(R.id.text_upload);
+
+        imageView.setOnClickListener(this);
+        uploadButton.setOnClickListener(this);
+    }
+
+    @Override
+    public void onClick(View v) {
+
     }
 
     @Override

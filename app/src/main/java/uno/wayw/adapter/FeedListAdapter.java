@@ -6,20 +6,26 @@ package uno.wayw.adapter;
 
 import android.app.Activity;
 import android.content.Context;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.net.Uri;
+import android.os.AsyncTask;
 import android.text.Html;
 import android.text.TextUtils;
 import android.text.format.DateUtils;
 import android.text.method.LinkMovementMethod;
+import android.util.Base64;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.android.volley.toolbox.ImageLoader;
 import com.android.volley.toolbox.NetworkImageView;
 
+import java.lang.ref.WeakReference;
 import java.util.List;
 
 import uno.wayw.FeedImageView;
@@ -89,7 +95,6 @@ public class FeedListAdapter extends BaseAdapter {
         // Chcek for empty status message
         if (!TextUtils.isEmpty(item.getTitle())) {
             titleText.setText(item.getTitle());
-            titleText.setVisibility(View.VISIBLE);
         } else {
             // status is empty, remove from view
             titleText.setVisibility(View.GONE);
@@ -97,22 +102,17 @@ public class FeedListAdapter extends BaseAdapter {
 
         // Checking for style
         if (item.getStyle() != null) {
-            styleText.setText("#" + item.getStyle().toLowerCase());
-            styleText.setVisibility(View.VISIBLE);
+            String style = "#" + item.getStyle().toLowerCase().replaceAll("\\s","");
+            styleText.setText(style);
         } else {
             // url is null, remove from the view
             styleText.setVisibility(View.GONE);
         }
 
-        // user profile pic
-
-        final String TEMP_PIC = ("https://media-members.nationalgeographic.com/static-media/images/css_images/nationalGeographic_default_avatar.jpg");
-        profilePic.setImageUrl(TEMP_PIC, imageLoader);
-
         // Feed image
         if (item.getImage() != null) {
-            Uri imageUri = Uri.parse(item.getImage());
-            feedImageView.setImageURI(imageUri);
+            Bitmap image = convertImage(item.getImage());
+            feedImageView.setImageBitmap(image);
         } else {
             feedImageView.setVisibility(View.GONE);
         }
@@ -120,4 +120,43 @@ public class FeedListAdapter extends BaseAdapter {
         return convertView;
     }
 
+    public Bitmap convertImage(String encodedString){
+        try{
+            byte [] encodeByte = Base64.decode(encodedString,Base64.DEFAULT);
+            Bitmap bitmap = BitmapFactory.decodeByteArray(encodeByte, 0, encodeByte.length);
+            return bitmap;
+        }catch(Exception e){
+            e.getMessage();
+            return null;
+        }
+    }
+
+}
+
+class BitmapWorkerTask extends AsyncTask<Integer, Void, Bitmap> {
+    private final WeakReference<ImageView> imageViewReference;
+    private int data = 0;
+
+    public BitmapWorkerTask(ImageView imageView) {
+        // Use a WeakReference to ensure the ImageView can be garbage collected
+        imageViewReference = new WeakReference<ImageView>(imageView);
+    }
+
+    // Decode image in background.
+    @Override
+    protected Bitmap doInBackground(Integer... params) {
+        data = params[0];
+        return decodeSampledBitmapFromResource(getResources(), data, 100, 100));
+    }
+
+    // Once complete, see if ImageView is still around and set bitmap.
+    @Override
+    protected void onPostExecute(Bitmap bitmap) {
+        if (imageViewReference != null && bitmap != null) {
+            final FeedImageView imageView = imageViewReference.get();
+            if (imageView != null) {
+                imageView.setImageBitmap(bitmap);
+            }
+        }
+    }
 }

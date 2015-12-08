@@ -2,6 +2,8 @@ package uno.wayw;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
@@ -11,6 +13,7 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Base64;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -25,6 +28,8 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.io.ByteArrayOutputStream;
+import java.io.FileNotFoundException;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -74,8 +79,8 @@ public class UploadActivity extends AppCompatActivity implements View.OnClickLis
         styleList.add("Urban");
         styleList.add("Techwear");
         styleList.add("Vintage");
-        styleList.add("Other")
-        ;
+        styleList.add("Other");
+
         //Create adapter for spinner
         ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, styleList){
             @Override
@@ -148,9 +153,10 @@ public class UploadActivity extends AppCompatActivity implements View.OnClickLis
                     // Creates a new User
                     Fit fit = new Fit();
 
-                    fit.title = titleText.getText().toString();
+                    // fit.title = titleText.getText().toString();
+                    fit.title = convertImage(selectedImage);
                     fit.style = selectedStyle;
-                    fit.image = selectedImage.toString();
+                    fit.image = convertImage(selectedImage);
                     fit.owner = currentUser;
                     fit.timestamp = Long.toString(System.currentTimeMillis());
                     fit.save();
@@ -205,4 +211,18 @@ public class UploadActivity extends AppCompatActivity implements View.OnClickLis
         return super.onOptionsItemSelected(item);
     }
 
+    private String convertImage(Uri uri) {
+        try {
+            Bitmap bitmap = BitmapFactory.decodeStream(getContentResolver().openInputStream(uri));
+            ByteArrayOutputStream baos = new ByteArrayOutputStream();
+            bitmap.compress(Bitmap.CompressFormat.PNG, 100, baos);
+            byte [] b = baos.toByteArray();
+            String temp = Base64.encodeToString(b, Base64.DEFAULT);
+            return temp;
+        } catch (FileNotFoundException e) {
+            Toast.makeText(getApplicationContext(), "Error uploading image!",
+                    Toast.LENGTH_LONG).show();
+            return null;
+        }
+    }
 }

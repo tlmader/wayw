@@ -2,10 +2,11 @@ package uno.wayw.adapter;
 
 import android.app.Activity;
 import android.content.Context;
-import android.text.Html;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.text.TextUtils;
 import android.text.format.DateUtils;
-import android.text.method.LinkMovementMethod;
+import android.util.Base64;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -20,7 +21,7 @@ import java.util.List;
 import uno.wayw.FeedImageView;
 import uno.wayw.R;
 import uno.wayw.app.AppController;
-import uno.wayw.data.FeedItem;
+import uno.wayw.data.Fit;
 
 /**
  * Created by Breezy on 12/7/15.
@@ -28,10 +29,10 @@ import uno.wayw.data.FeedItem;
 public class DetailListAdapter extends BaseAdapter {
     private Activity activity;
     private LayoutInflater inflater;
-    private List<FeedItem> detailItems;
+    private List<Fit> detailItems;
     ImageLoader imageLoader = AppController.getInstance().getImageLoader();
 
-    public DetailListAdapter(Activity activity, List<FeedItem> feedItems) {
+    public DetailListAdapter(Activity activity, List<Fit> feedItems) {
         this.activity = activity;
         this.detailItems = feedItems;
     }
@@ -62,70 +63,64 @@ public class DetailListAdapter extends BaseAdapter {
         if (imageLoader == null)
             imageLoader = AppController.getInstance().getImageLoader();
 
-        TextView name = (TextView) convertView.findViewById(R.id.name);
+        TextView ownerText = (TextView) convertView.findViewById(R.id.name);
         TextView timestamp = (TextView) convertView
                 .findViewById(R.id.timestamp);
-        TextView statusMsg = (TextView) convertView
+        TextView titleText = (TextView) convertView
                 .findViewById(R.id.txtStatusMsg);
-        TextView url = (TextView) convertView.findViewById(R.id.txtUrl);
+        TextView styleText = (TextView) convertView.findViewById(R.id.txtUrl);
         NetworkImageView profilePic = (NetworkImageView) convertView
                 .findViewById(R.id.profilePic);
         FeedImageView feedImageView = (FeedImageView) convertView
                 .findViewById(R.id.feedImage1);
 
-        FeedItem item = detailItems.get(position);
+        Fit item = detailItems.get(position);
 
-        name.setText(item.getName());
+        ownerText.setText(item.getOwner());
 
         // Converting timestamp into x ago format
         CharSequence timeAgo = DateUtils.getRelativeTimeSpanString(
-                Long.parseLong(item.getTimeStamp()),
+                Long.parseLong(item.getTimestamp()),
                 System.currentTimeMillis(), DateUtils.SECOND_IN_MILLIS);
         timestamp.setText(timeAgo);
 
         // Chcek for empty status message
-        if (!TextUtils.isEmpty(item.getStatus())) {
-            statusMsg.setText(item.getStatus());
-            statusMsg.setVisibility(View.VISIBLE);
+        if (!TextUtils.isEmpty(item.getTitle())) {
+            titleText.setText(item.getTitle());
+            titleText.setVisibility(View.VISIBLE);
         } else {
             // status is empty, remove from view
-            statusMsg.setVisibility(View.GONE);
+            titleText.setVisibility(View.GONE);
         }
 
-        // Checking for null feed url
-        if (item.getUrl() != null) {
-            url.setText(Html.fromHtml("<a href=\"" + item.getUrl() + "\">"
-                    + item.getUrl() + "</a> "));
-
-            // Making url clickable
-            url.setMovementMethod(LinkMovementMethod.getInstance());
-            url.setVisibility(View.VISIBLE);
+        // Checking for style
+        if (item.getStyle() != null) {
+            String style = "#" + item.getStyle().toLowerCase().replaceAll("\\s","");
+            styleText.setText(style);
         } else {
             // url is null, remove from the view
-            url.setVisibility(View.GONE);
+            styleText.setVisibility(View.GONE);
         }
-
-        // user profile pic
-        profilePic.setImageUrl(item.getProfilePic(), imageLoader);
 
         // Feed image
         if (item.getImage() != null) {
-            feedImageView.setImageUrl(item.getImage(), imageLoader);
-            feedImageView.setVisibility(View.VISIBLE);
-            feedImageView
-                    .setResponseObserver(new FeedImageView.ResponseObserver() {
-                        @Override
-                        public void onError() {
-                        }
-
-                        @Override
-                        public void onSuccess() {
-                        }
-                    });
+            Bitmap image = convertImage(item.getImage());
+            feedImageView.setImageBitmap(image);
         } else {
             feedImageView.setVisibility(View.GONE);
         }
 
         return convertView;
+    }
+
+    public Bitmap convertImage(String encodedString){
+        try{
+            byte [] encodeByte = Base64.decode(encodedString, Base64.DEFAULT);
+            Bitmap bitmap = BitmapFactory.decodeByteArray(encodeByte, 0, encodeByte.length);
+            return bitmap;
+        }catch(Exception e){
+            e.getMessage();
+            return null;
+        }
     }
 }

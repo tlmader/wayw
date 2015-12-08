@@ -16,7 +16,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import uno.wayw.adapter.DetailListAdapter;
-import uno.wayw.data.FeedItem;
+import uno.wayw.data.Fit;
 import uno.wayw.data.User;
 
 public class DetailActivity extends AppCompatActivity {
@@ -26,7 +26,7 @@ public class DetailActivity extends AppCompatActivity {
     public User detailUser;
     private ListView listView;
     private DetailListAdapter listAdapter;
-    private List<FeedItem> detailItems;
+    private List<Fit> detailItems;
 
     @SuppressLint("NewApi")
     @Override
@@ -38,7 +38,7 @@ public class DetailActivity extends AppCompatActivity {
 
         listView = (ListView) findViewById(R.id.detailList);
 
-        detailItems = new ArrayList<FeedItem>();
+        detailItems = new ArrayList<Fit>();
 
         listAdapter = new DetailListAdapter(this, detailItems);
         listView.setAdapter(listAdapter);
@@ -56,10 +56,10 @@ public class DetailActivity extends AppCompatActivity {
         detailUser = detailClick.get(0);
 
         //Pull from the Database
-        List<FeedItem> detailFeedFromDB = new ArrayList<>();
-        detailFeedFromDB = FeedItem.getByUserName(detailUser.userName);
-        for (FeedItem t : detailFeedFromDB) {
-            if( !(t.userName.equals(loggedInUser.userName)) )
+        List<Fit> detailFeedFromDB = new ArrayList<>();
+        detailFeedFromDB = Fit.getByOwner(detailUser.userName);
+        for (Fit t : detailFeedFromDB) {
+            if( !(t.owner.equals(loggedInUser.userName)) )
             {
                 detailItems.add(t);
             }

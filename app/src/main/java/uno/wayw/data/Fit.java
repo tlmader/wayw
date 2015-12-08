@@ -97,4 +97,20 @@ public class Fit extends Model {
                 .orderBy("Title ASC")
                 .execute();
     }
+
+    public static List<Fit> getByOwner(String searchOwner){
+        return new Select()
+                .from(Fit.class)
+                .where("Owner = ?", searchOwner)
+                .execute();
+    }
+
+
+    public static List<Fit> getByFilterStyleSearch(String searchTerm){
+        return new Select()
+                .from(Fit.class)
+                .where("Style LIKE ?", new String[]{'%' + searchTerm + '%'})
+                .orderBy("Title ASC")
+                .execute();
+    }
 }

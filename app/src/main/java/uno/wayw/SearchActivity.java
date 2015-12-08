@@ -19,6 +19,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import uno.wayw.adapter.SearchListAdapter;
+import uno.wayw.data.Fit;
 import uno.wayw.data.User;
 
 public class SearchActivity extends AppCompatActivity {
@@ -28,6 +29,7 @@ public class SearchActivity extends AppCompatActivity {
     private ListView listView;
     private SearchListAdapter listAdapter;
     private List<User> searchItems;
+    public List<User> styleUser;
 
     @SuppressLint("NewApi")
     @Override
@@ -84,6 +86,25 @@ public class SearchActivity extends AppCompatActivity {
                     if (!(t.userName.equals(loggedInUser.userName))) {
                         if(! searchItems.contains(t)) {
                             searchItems.add(t);
+                        }
+                    }
+                }
+                List<Fit> filterFit = new ArrayList<>();
+                filterFit = Fit.getByFilterStyleSearch(query);
+                for (Fit t : filterFit) {
+                    if (!(t.owner.equals(loggedInUser.userName))) {
+                        styleUser = new ArrayList<User>();
+                        styleUser = User.getByUserName(t.owner);
+
+                    }
+                }
+                Log.d("Style", "" + styleUser.size());
+
+                if(styleUser != null) {
+                    for (User u : styleUser) {
+                        if (!searchItems.contains(u)) {
+                            Log.d("Style", "" + searchItems.size());
+                            searchItems.add(u);
                         }
                     }
                 }
